@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import { View, FlatList, Text} from 'react-native';
+import {FlatList} from 'react-native';
 import Item from "./Item"
 
-import { Style } from '../../styles/Grid'
+import Style from '../../styles/Grid'
 
 export interface State {
     numCols: number
@@ -11,10 +11,10 @@ export interface State {
 export class Grid extends Component<{}, State> {
 
     componentWillMount(){
-        this.setState({numCols: 5})
+        this.setState({numCols: 10})
     }
 
-    renderList: number[] = Array.from(Array(30).keys())
+    renderList: number[] = Array.from(Array(160).keys())
 
     formatData = (data, numColumns) => {
 
@@ -30,7 +30,7 @@ export class Grid extends Component<{}, State> {
             data= {this.formatData(this.renderList, this.state.numCols)}
             renderItem={() => <Item />}
             numColumns={this.state.numCols}
-            style={Style.MainContainer}
+            //style={Style.MainContainer}
             />
         )
     }
