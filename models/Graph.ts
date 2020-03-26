@@ -1,4 +1,4 @@
-type node = {
+export type node = {
     x: number
     y: number
 }

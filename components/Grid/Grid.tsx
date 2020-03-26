@@ -16,11 +16,10 @@ export class Grid extends Component<Props, State> {
         this.state = { numCols: 10, selected: new Map()}
     }
 
-    renderList: number[] = Array.from(Array(160).keys())
 
-    formatData = (data: number[]) => {
+    formatData = () => {
 
-        return data.map((item, index) => {
+        return Array.from(Array(160).keys()).map((item, index) => {
             return {key: `${Math.floor(index/10)}, ${index%10}`}
         })
     }
@@ -30,12 +29,14 @@ export class Grid extends Component<Props, State> {
             state.selected.set(id, !state.selected.get(id))
             return state
         })
+
+        if(this.state.selected.size == 2){}
     }
  
     render(){
         return (
             <FlatList 
-            data= {this.formatData(this.renderList)}
+            data= {this.formatData()}
             renderItem={({item}) => (<Item id={item.key} onSelect={this.itemSelected} selected={!!this.state.selected.get(item.key)}/>)}
             numColumns={this.state.numCols}
             keyExtractor={item => item.key}
