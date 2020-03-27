@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { Grid } from './components/Grid/Grid'
 import Style from './styles/App'
 

@@ -2,7 +2,7 @@ import React from 'react'
 import {TouchableOpacity, Dimensions} from 'react-native'
 import Style from '../../styles/Grid'
 
-export interface props {
+interface props {
     id: string
     onSelect: (id: string) => void
     selected: boolean

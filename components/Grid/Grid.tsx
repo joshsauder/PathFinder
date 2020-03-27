@@ -26,13 +26,12 @@ export class Grid extends Component<Props, State> {
         this.setupGrid()
     }
 
-
     setupGrid = () => {
         this.setState(state => {
             for(let r = 0; r < 20; r++){
                 let row: node[] = []
                 for(let c = 0; c < this.state.numCols; c++){
-                    row.push({key: `${r},${c}`,x: r, y: c, weight: 0, closed: false})
+                    row.push({key: `${r},${c}`,x: r, y: c, weight: Infinity, closed: false})
                 }
                 state.graph.push(row)
             }
@@ -50,19 +49,23 @@ export class Grid extends Component<Props, State> {
         if(this.state.selected.size == 2){}
     }
 
-    renderRow = (row: node[]): any => {
-        return row.map(item => {
-            <Item id={item.key} onSelect={this.itemSelected} selected={!!this.state.selected.get(item.key)}/>
+    renderData = (): node[] => {
+        let nodes: node[] = []
+        this.state.graph.forEach(row => {
+            nodes = nodes.concat(row)
         })
+        
+        return nodes
     }
  
     render(){
         return (
             <FlatList 
-            data= {this.state.graph}
-            renderItem={({item}) => this.renderRow(item)}
+            data= {this.renderData()}
+            renderItem={({item}) => <Item id={item.key} onSelect={this.itemSelected} selected={!!this.state.selected.get(item.key)}/>}
             numColumns={this.state.numCols}
             extraData={this.state}
+            keyExtractor={(item) => item.key}
             />
         )
     }
