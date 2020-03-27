@@ -1,14 +1,28 @@
-import Heap, { heapify } from 'heap'
+import Heap from 'heap'
 import {node} from '../models/Graph'
 
 export default class Dijkstra {
     
     findShortestPath(start: node, end: node, nodesList: node[]){
 
-        let queuedNodes = new Heap()
+        let queuedNodes = new Heap<node>()
 
         while(queuedNodes.size() > 0){
+            let openNode = queuedNodes.pop()
 
+            let neighborNodes = this.findNeighborNodes(openNode);
+
+            neighborNodes.forEach(neighbor => {
+
+                if(!neighbor.closed){
+
+                    let weight = openNode.weight + 1
+                    neighbor.weight = weight
+
+                    queuedNodes.push(neighbor)
+                
+                }
+            })
         }
     }
 

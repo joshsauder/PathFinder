@@ -1,6 +1,8 @@
 export type node = {
     x: number
     y: number
+    weight: number
+    closed: boolean
 }
 
 export default class Graph {
