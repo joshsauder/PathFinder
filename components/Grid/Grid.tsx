@@ -39,10 +39,10 @@ export class Grid extends Component<Props, State> {
 
     setupGrid = () => {
         this.setState(state => {
-            for(let r = 0; r < 20; r++){
+            for(let c = 0; c < this.state.numCols; c++){
                 let row: node[] = []
-                for(let c = 0; c < this.state.numCols; c++){
-                    row.push({key: `${c},${r}`,x: c, y: r, weight: Infinity, closed: false})
+                for(let r = 0; r < 10; r++){
+                    row.push({key: `${r},${c}`,x: r, y: c, previous:null, weight: Infinity, closed: false})
                 }
                 state.graph.push(row)
             }
@@ -53,7 +53,7 @@ export class Grid extends Component<Props, State> {
 
     itemSelected = (id: string) => {
         let coordinates = id.split(',')
-        let selectedNode = {x: parseInt(coordinates[1]), y: parseInt(coordinates[0]), key: id, weight: Infinity, closed: false}
+        let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false}
         if(this.state.start === undefined){this.setState({start: {...selectedNode}})} 
         else if(this.state.start.key === id){this.setState({start: undefined})} 
         else {this.setState({end: {...selectedNode}})}
