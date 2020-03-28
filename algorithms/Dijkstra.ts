@@ -7,7 +7,7 @@ export function findShortestPath(start: node, end: node, grid: node[][]): node[]
     let queuedNodes = new Heap<node>(function (a, b) {
         return a.weight - b.weight;
     })
-    
+
     let visitedNodes: node[] = []
 
     //set starting node weight to 0
@@ -17,7 +17,10 @@ export function findShortestPath(start: node, end: node, grid: node[][]): node[]
     while (queuedNodes.size() > 0) {
         let openNode = queuedNodes.pop()
 
-        if (openNode.key === end.key) { return visitedNodes }
+        if (openNode.key === end.key) {
+             visitedNodes.push(openNode) 
+             return visitedNodes
+        }
 
         let neighborNodes = findNeighborNodes(openNode, grid[0].length, grid.length, grid);
 
@@ -59,5 +62,19 @@ function findNeighborNodes(node: node, width: number, height: number, allNodes: 
     }
 
     return neighbors.filter(node => node.closed == false)
+}
+
+export function getPathInOrder(finalNode: node): node[]{
+    let finalPath: node[] = []
+
+    
+    let current = {...finalNode}
+
+    while(current.previous !== null){
+        finalPath.unshift(current)
+        current = current.previous
+    }
+
+    return finalPath
 }
 

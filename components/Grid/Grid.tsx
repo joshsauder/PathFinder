@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {FlatList} from 'react-native';
 import Item from "./Item"
 import {node} from '../../models/Graph';
-import {findShortestPath} from '../../algorithms/Dijkstra'
+import {findShortestPath, getPathInOrder} from '../../algorithms/Dijkstra'
 
 interface State {
     numCols: number,
@@ -33,7 +33,8 @@ export class Grid extends Component<Props, State> {
 
     componentDidUpdate(){
         if(this.state.start && this.state.end){
-            console.log(findShortestPath(this.state.start, this.state.end, this.state.graph))
+            let visitiedNodes: node[] = findShortestPath(this.state.start, this.state.end, this.state.graph)
+            console.log(getPathInOrder(visitiedNodes.pop()))
         }
     }
 
