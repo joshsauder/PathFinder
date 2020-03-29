@@ -7,6 +7,7 @@ import {findShortestPath, getPathInOrder} from '../../algorithms/Dijkstra'
 interface State {
     numCols: number,
     selected: Map<string, boolean>
+    path: Map<string, boolean>
     start: node,
     end: node,
     graph: node[][]
@@ -15,6 +16,7 @@ interface State {
 interface Props {}
 
 export class Grid extends Component<Props, State> {
+    itemRefs: any[];
 
     constructor(props){
         super(props)
@@ -23,18 +25,28 @@ export class Grid extends Component<Props, State> {
             start: undefined,
             end: undefined,
             selected: new Map(),
+            path: new Map(),
             graph: []
         }
+
+        this.itemRefs = []
     }
 
     componentDidMount(){
         this.setupGrid()
     }
 
-    componentDidUpdate(){
-        if(this.state.start && this.state.end){
+    componentDidUpdate(prevProps, prevState){
+        if(this.state.start && this.state.end && (this.state.start !== prevState.start || this.state.end !== prevState.end)){
             let visitiedNodes: node[] = findShortestPath(this.state.start, this.state.end, this.state.graph)
-            console.log(getPathInOrder(visitiedNodes.pop()))
+            let path = getPathInOrder(visitiedNodes.pop())
+            path.forEach(node => {
+                this.setState(state => {
+                    state.path.set(node.key, true)
+                    return state
+                })
+            })
+            console.log(this.state.path)
         }
     }
 
@@ -61,6 +73,7 @@ export class Grid extends Component<Props, State> {
 
         this.setState(state =>{
             state.selected.set(id, !state.selected.get(id))
+            return state
         })
     }
 
@@ -72,13 +85,16 @@ export class Grid extends Component<Props, State> {
 
         return nodes
     }
- 
+
     render(){
         return (
             <FlatList 
             data= {this.renderData()}
             renderItem={({item}) => 
-            <Item id={item.key} onSelect={this.itemSelected} selected={!!this.state.selected.get(item.key)}/>}
+            <Item id={item.key} 
+                onSelect={this.itemSelected} 
+                selected={!!this.state.selected.get(item.key)} 
+                path = {this.state.path.get(item.key)} />}
             numColumns={this.state.numCols}
             extraData={this.state}
             keyExtractor={(item) => item.key}
