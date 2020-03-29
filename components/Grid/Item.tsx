@@ -8,6 +8,7 @@ interface props {
     selected: boolean
     path: boolean
     visited: boolean
+    setRef: (item: TouchableOpacity, id: string) => void
 }
 
 export default function Item(props: props){
@@ -18,7 +19,8 @@ export default function Item(props: props){
     else if(props.visited){background="grey"}
 
     return (
-        <TouchableOpacity 
+        <TouchableOpacity
+        ref={(item) => {props.setRef(item, props.id)}}
         onPress={() => props.onSelect(props.id)}
         style={[Style.Item, 
             {height: Dimensions.get('window').width / 10,

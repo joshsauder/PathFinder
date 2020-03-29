@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {FlatList} from 'react-native';
+import {FlatList, TouchableOpacity, View} from 'react-native';
 import Item from "./Item"
 import {node} from '../../models/Graph';
 import {findShortestPath, getPathInOrder} from '../../algorithms/Dijkstra'
@@ -17,7 +17,7 @@ interface State {
 interface Props {}
 
 export class Grid extends Component<Props, State> {
-    itemRefs: any[];
+    itemRefs: any;
 
     constructor(props){
         super(props)
@@ -30,6 +30,8 @@ export class Grid extends Component<Props, State> {
             visited: new Map(),
             graph: []
         }
+
+        this.itemRefs = {}
     }
 
     componentDidMount(){
@@ -45,19 +47,15 @@ export class Grid extends Component<Props, State> {
     }
 
     highLightGrid = (path: node[], visitiedNodes: node[]) => {
-        visitiedNodes.forEach(node => {
+        visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
-                let visit = this.state.visited
-                visit.set(node.key, true)
-                this.setState({visited: visit})
-            }, 2000)
+                this.itemRefs[node.key].setNativeProps({style: {backgroundColor: "grey"}})
+            }, 30*index)
         })
-        path.forEach(node => {
+        path.forEach((node, index) => {
             setTimeout(() => {
-                let path = this.state.path
-                path.set(node.key, true)
-                this.setState({path: path})
-            }, 2000)
+                this.itemRefs[node.key].setNativeProps({style: {backgroundColor: "yellow"}})
+            }, 30*(index+visitiedNodes.length))
         })
     }
 
@@ -97,6 +95,10 @@ export class Grid extends Component<Props, State> {
         return nodes
     }
 
+    setReference = (item: View, id: string): void =>{
+        this.itemRefs[id] = item
+    }
+
     render(){
         return (
             <FlatList 
@@ -106,7 +108,9 @@ export class Grid extends Component<Props, State> {
                 onSelect={this.itemSelected} 
                 selected={!!this.state.selected.get(item.key)} 
                 visited={!!this.state.visited.get(item.key)}
-                path = {!!this.state.path.get(item.key)} />}
+                path = {!!this.state.path.get(item.key)} 
+                setRef={this.setReference}
+                />}
             numColumns={this.state.numCols}
             extraData={this.state}
             keyExtractor={(item) => item.key}
