@@ -7,6 +7,7 @@ interface props {
     onSelect: (id: string) => void
     selected: boolean
     path: boolean
+    visited: boolean
 }
 
 export default function Item(props: props){
@@ -14,7 +15,7 @@ export default function Item(props: props){
     let background = '#6495ED'
     if(props.selected){background = 'black'}
     else if(props.path){background='yellow'}
-    console.log(props.path)
+    else if(props.visited){background="grey"}
 
     return (
         <TouchableOpacity 

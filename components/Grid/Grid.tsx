@@ -8,6 +8,7 @@ interface State {
     numCols: number,
     selected: Map<string, boolean>
     path: Map<string, boolean>
+    visited: Map<string, boolean>
     start: node,
     end: node,
     graph: node[][]
@@ -26,10 +27,9 @@ export class Grid extends Component<Props, State> {
             end: undefined,
             selected: new Map(),
             path: new Map(),
+            visited: new Map(),
             graph: []
         }
-
-        this.itemRefs = []
     }
 
     componentDidMount(){
@@ -40,14 +40,25 @@ export class Grid extends Component<Props, State> {
         if(this.state.start && this.state.end && (this.state.start !== prevState.start || this.state.end !== prevState.end)){
             let visitiedNodes: node[] = findShortestPath(this.state.start, this.state.end, this.state.graph)
             let path = getPathInOrder(visitiedNodes.pop())
-            path.forEach(node => {
-                this.setState(state => {
-                    state.path.set(node.key, true)
-                    return state
-                })
-            })
-            console.log(this.state.path)
+            this.highLightGrid(path, visitiedNodes)
         }
+    }
+
+    highLightGrid = (path: node[], visitiedNodes: node[]) => {
+        visitiedNodes.forEach(node => {
+            setTimeout(() => {
+                let visit = this.state.visited
+                visit.set(node.key, true)
+                this.setState({visited: visit})
+            }, 2000)
+        })
+        path.forEach(node => {
+            setTimeout(() => {
+                let path = this.state.path
+                path.set(node.key, true)
+                this.setState({path: path})
+            }, 2000)
+        })
     }
 
     setupGrid = () => {
@@ -94,7 +105,8 @@ export class Grid extends Component<Props, State> {
             <Item id={item.key} 
                 onSelect={this.itemSelected} 
                 selected={!!this.state.selected.get(item.key)} 
-                path = {this.state.path.get(item.key)} />}
+                visited={!!this.state.visited.get(item.key)}
+                path = {!!this.state.path.get(item.key)} />}
             numColumns={this.state.numCols}
             extraData={this.state}
             keyExtractor={(item) => item.key}
