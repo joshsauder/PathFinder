@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {FlatList} from 'react-native';
 import Item from "./Item"
 import {node} from '../../models/Graph';
-import {findShortestPath, getPathInOrder} from '../../algorithms/Dijkstra'
+import {findShortestPath, getPathInOrder, twoWayDijkstra} from '../../algorithms/Dijkstra'
 
 interface State {
     numCols: number,
@@ -36,10 +36,11 @@ export class Grid extends Component<Props, State> {
 
     componentDidUpdate(prevProps, prevState){
         if(this.state.start && this.state.end && (this.state.start !== prevState.start || this.state.end !== prevState.end)){
-            let visitiedNodes: node[] = findShortestPath(this.state.start, this.state.end, this.state.graph)
+            let visitiedNodes: node[] = twoWayDijkstra(this.state.start, this.state.end, this.state.graph)
             if(visitiedNodes.length > 0){
-                let path = getPathInOrder(visitiedNodes.pop())
-                this.highLightGrid(path, visitiedNodes)
+                let endpath = getPathInOrder(visitiedNodes.pop())
+                let startpath = getPathInOrder(visitiedNodes.pop())
+                this.highLightGrid([...startpath, ...endpath], visitiedNodes)
             }
         }
     }
@@ -48,12 +49,12 @@ export class Grid extends Component<Props, State> {
         visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](-1)
-            }, 30*index)
+            }, 20*index)
         })
         path.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](1)
-            }, 30*(index+visitiedNodes.length-2))
+            }, 20*(index + visitiedNodes.length))
         })
     }
 

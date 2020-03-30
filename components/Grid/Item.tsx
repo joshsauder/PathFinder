@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {TouchableOpacity, Dimensions, View, Animated} from 'react-native'
 import Style from '../../styles/Grid'
 
