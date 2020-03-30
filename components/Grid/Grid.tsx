@@ -12,7 +12,9 @@ interface State {
     graph: node[][]
 }
 
-interface Props {}
+interface Props {
+    algorithm: string
+}
 
 export class Grid extends Component<Props, State> {
     itemRefs: any;
@@ -42,6 +44,27 @@ export class Grid extends Component<Props, State> {
                 let startpath = getPathInOrder(visitiedNodes.pop())
                 this.highLightGrid([...startpath, ...endpath], visitiedNodes)
             }
+        }
+    }
+
+    determinePath = () => {
+        let visitiedNodes: node[]
+        switch(this.props.algorithm){
+            case "Dijkstra":
+                visitiedNodes = findShortestPath(this.state.start, this.state.end, this.state.graph)
+                if(visitiedNodes.length > 0){
+                    let endpath = getPathInOrder(visitiedNodes.pop())
+                    let startpath = getPathInOrder(visitiedNodes.pop())
+                    this.highLightGrid([...startpath, ...endpath], visitiedNodes)
+                }
+
+            case "BiD":
+                visitiedNodes = twoWayDijkstra(this.state.start, this.state.end, this.state.graph)
+                if(visitiedNodes.length > 0){
+                    let endpath = getPathInOrder(visitiedNodes.pop())
+                    let startpath = getPathInOrder(visitiedNodes.pop())
+                    this.highLightGrid([...startpath, ...endpath], visitiedNodes)
+                }
         }
     }
 
