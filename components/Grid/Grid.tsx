@@ -38,12 +38,7 @@ export class Grid extends Component<Props, State> {
 
     componentDidUpdate(prevProps, prevState){
         if(this.state.start && this.state.end && (this.state.start !== prevState.start || this.state.end !== prevState.end)){
-            let visitiedNodes: node[] = twoWayDijkstra(this.state.start, this.state.end, this.state.graph)
-            if(visitiedNodes.length > 0){
-                let endpath = getPathInOrder(visitiedNodes.pop())
-                let startpath = getPathInOrder(visitiedNodes.pop())
-                this.highLightGrid([...startpath, ...endpath], visitiedNodes)
-            }
+            this.determinePath()
         }
     }
 
@@ -53,9 +48,8 @@ export class Grid extends Component<Props, State> {
             case "Dijkstra":
                 visitiedNodes = findShortestPath(this.state.start, this.state.end, this.state.graph)
                 if(visitiedNodes.length > 0){
-                    let endpath = getPathInOrder(visitiedNodes.pop())
-                    let startpath = getPathInOrder(visitiedNodes.pop())
-                    this.highLightGrid([...startpath, ...endpath], visitiedNodes)
+                    let path = getPathInOrder(visitiedNodes.pop())
+                    this.highLightGrid(path, visitiedNodes)
                 }
 
             case "BiD":
@@ -72,12 +66,12 @@ export class Grid extends Component<Props, State> {
         visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](-1)
-            }, 20*index)
+            }, 30*index)
         })
         path.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](1)
-            }, 20*(index + visitiedNodes.length))
+            }, 30*(index + visitiedNodes.length))
         })
     }
 
