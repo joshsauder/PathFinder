@@ -7,8 +7,6 @@ import {findShortestPath, getPathInOrder} from '../../algorithms/Dijkstra'
 interface State {
     numCols: number,
     selected: Map<string, boolean>
-    path: Map<string, boolean>
-    visited: Map<string, boolean>
     start: node,
     end: node,
     graph: node[][]
@@ -26,8 +24,6 @@ export class Grid extends Component<Props, State> {
             start: undefined,
             end: undefined,
             selected: new Map(),
-            path: new Map(),
-            visited: new Map(),
             graph: []
         }
 
@@ -41,21 +37,23 @@ export class Grid extends Component<Props, State> {
     componentDidUpdate(prevProps, prevState){
         if(this.state.start && this.state.end && (this.state.start !== prevState.start || this.state.end !== prevState.end)){
             let visitiedNodes: node[] = findShortestPath(this.state.start, this.state.end, this.state.graph)
-            let path = getPathInOrder(visitiedNodes.pop())
-            this.highLightGrid(path, visitiedNodes)
+            if(visitiedNodes.length > 0){
+                let path = getPathInOrder(visitiedNodes.pop())
+                this.highLightGrid(path, visitiedNodes)
+            }
         }
     }
 
     highLightGrid = (path: node[], visitiedNodes: node[]) => {
         visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
-                this.itemRefs[node.key].setNativeProps({style: {backgroundColor: "grey"}})
+                this.itemRefs[node.key](-1)
             }, 30*index)
         })
         path.forEach((node, index) => {
             setTimeout(() => {
-                this.itemRefs[node.key].setNativeProps({style: {backgroundColor: "yellow"}})
-            }, 30*(index+visitiedNodes.length))
+                this.itemRefs[node.key](1)
+            }, 30*(index+visitiedNodes.length-2))
         })
     }
 
@@ -95,7 +93,7 @@ export class Grid extends Component<Props, State> {
         return nodes
     }
 
-    setReference = (item: View, id: string): void =>{
+    setReference = (item: (value: number) => void, id: string): void =>{
         this.itemRefs[id] = item
     }
 
@@ -107,9 +105,7 @@ export class Grid extends Component<Props, State> {
             <Item id={item.key} 
                 onSelect={this.itemSelected} 
                 selected={!!this.state.selected.get(item.key)} 
-                visited={!!this.state.visited.get(item.key)}
-                path = {!!this.state.path.get(item.key)} 
-                setRef={this.setReference}
+                forwardRef={(c: (value: number) => void) => {this.setReference(c, item.key)}}
                 />}
             numColumns={this.state.numCols}
             extraData={this.state}

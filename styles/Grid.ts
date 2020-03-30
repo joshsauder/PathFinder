@@ -10,5 +10,9 @@ export default StyleSheet.create({
         justifyContent: 'center',
         flex: 1,
         margin: 1,
+    },
+    View: { 
+        width: '100%',
+        height: '100%'
     }
 })
