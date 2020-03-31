@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {FlatList} from 'react-native';
+import {View, FlatList, PanResponderInstance, PanResponder, Animated} from 'react-native';
 import Item from "./Item"
 import {node} from '../../models/Graph';
 import {findShortestPath, getPathInOrder, twoWayDijkstra} from '../../algorithms/Dijkstra'
@@ -10,7 +10,8 @@ interface State {
     selected: Map<string, boolean>
     start: node,
     end: node,
-    graph: node[][]
+    graph: node[][],
+    dragging: boolean
 }
 
 interface Props {
@@ -27,7 +28,8 @@ export class Grid extends Component<Props, State> {
             start: undefined,
             end: undefined,
             selected: new Map(),
-            graph: []
+            graph: [],
+            dragging: false
         }
 
         this.itemRefs = {}
@@ -88,7 +90,7 @@ export class Grid extends Component<Props, State> {
             for(let c = 0; c < this.state.numCols; c++){
                 let row: node[] = []
                 for(let r = 0; r < 20; r++){
-                    row.push({key: `${r},${c}`,x: r, y: c, previous:null, weight: Infinity, closed: false})
+                    row.push({key: `${r},${c}`,x: r, y: c, previous:null, weight: Infinity, closed: false, wall: false})
                 }
                 state.graph.push(row)
             }
@@ -99,7 +101,7 @@ export class Grid extends Component<Props, State> {
 
     itemSelected = (id: string) => {
         let coordinates = id.split(',')
-        let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false}
+        let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false, wall: false}
         if(this.state.start === undefined){this.setState({start: {...selectedNode}})} 
         else if(this.state.start.key === id){this.setState({start: undefined})} 
         else {this.setState({end: {...selectedNode}})}
@@ -125,18 +127,19 @@ export class Grid extends Component<Props, State> {
 
     render(){
         return (
-            <FlatList 
-            data= {this.renderData()}
-            renderItem={({item}) => 
-            <Item id={item.key} 
-                onSelect={this.itemSelected} 
-                selected={!!this.state.selected.get(item.key)} 
-                forwardRef={(c: (value: number) => void) => {this.setReference(c, item.key)}}
-                />}
-            numColumns={this.state.numCols}
-            extraData={this.state}
-            keyExtractor={(item) => item.key}
-            />
+                <FlatList 
+                data= {this.renderData()}
+                scrollEnabled = {false}
+                renderItem={({item}) => 
+                    <Item id={item.key} 
+                        onSelect={this.itemSelected} 
+                        selected={!!this.state.selected.get(item.key)} 
+                        forwardRef={(c: (value: number) => void) => {this.setReference(c, item.key)}}
+                        />}
+                numColumns={this.state.numCols}
+                extraData={this.state}
+                keyExtractor={(item) => item.key}
+                />
         )
     }
 }

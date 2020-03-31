@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Dimensions } from 'react-native';
-import AlgorithmPicker from './components/AlgorithmPicker'
+import AlgorithmPicker from './components/TopNav/AlgorithmPicker'
 import { Grid } from './components/Grid/Grid'
 import Style from './styles/App'
 

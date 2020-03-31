@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Picker } from "react-native";
-import Styles from '../styles/Picker'
+import Styles from '../../styles/Picker'
 
 interface props {
     algorithm: string

@@ -4,5 +4,6 @@ export type node = {
     y: number
     previous: node
     weight: number
+    wall: boolean
     closed: boolean
 }
