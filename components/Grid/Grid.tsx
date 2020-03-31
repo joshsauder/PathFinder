@@ -3,6 +3,7 @@ import {FlatList} from 'react-native';
 import Item from "./Item"
 import {node} from '../../models/Graph';
 import {findShortestPath, getPathInOrder, twoWayDijkstra} from '../../algorithms/Dijkstra'
+import {BreadthFirstSearch} from '../../algorithms/BFS'
 
 interface State {
     numCols: number,
@@ -22,7 +23,7 @@ export class Grid extends Component<Props, State> {
     constructor(props){
         super(props)
         this.state = { 
-            numCols: 10, 
+            numCols: 20, 
             start: undefined,
             end: undefined,
             selected: new Map(),
@@ -59,6 +60,13 @@ export class Grid extends Component<Props, State> {
                     let startpath = getPathInOrder(visitiedNodes.pop())
                     this.highLightGrid([...startpath, ...endpath], visitiedNodes)
                 }
+            
+            case "BFS":
+                visitiedNodes = BreadthFirstSearch(this.state.start, this.state.end, this.state.graph)
+                if(visitiedNodes.length > 0){
+                    let path = getPathInOrder(visitiedNodes.pop())
+                    this.highLightGrid(path, visitiedNodes)
+                }
         }
     }
 
@@ -66,12 +74,12 @@ export class Grid extends Component<Props, State> {
         visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](-1)
-            }, 30*index)
+            }, 500*index)
         })
         path.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](1)
-            }, 30*(index + visitiedNodes.length))
+            }, 500*(index + visitiedNodes.length))
         })
     }
 
@@ -79,7 +87,7 @@ export class Grid extends Component<Props, State> {
         this.setState(state => {
             for(let c = 0; c < this.state.numCols; c++){
                 let row: node[] = []
-                for(let r = 0; r < 10; r++){
+                for(let r = 0; r < 20; r++){
                     row.push({key: `${r},${c}`,x: r, y: c, previous:null, weight: Infinity, closed: false})
                 }
                 state.graph.push(row)

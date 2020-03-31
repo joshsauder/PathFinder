@@ -11,8 +11,10 @@ export function findShortestPath(start: node, end: node, grid: node[][]): node[]
     let visitedNodes: node[] = []
 
     //set starting node weight to 0
-    start.weight = 0
-    queuedNodes.push(start)
+    //set start and end weights to 0
+    let sNode = grid[start.y][start.x]
+    sNode.weight = 0
+    queuedNodes.push(sNode)
 
     while (queuedNodes.size() > 0) {
         let openNode = queuedNodes.pop()
@@ -45,12 +47,17 @@ export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
     let visitedNodes: node[] = []
 
     //set start and end weights to 0
-    start.weight = 0
-    end.weight = 0
+    let sNode = grid[start.y][start.x]
+    sNode.weight = 0
+    sNode.closed = true
+
+    let eNode = grid[end.y][start.x]
+    eNode.weight = 0
+    sNode.closed = true
 
     //push start and end
-    queuedNodes.push(start)
-    reverseQueuedNodes.push(end)
+    queuedNodes.push(sNode)
+    reverseQueuedNodes.push(eNode)
 
     while (queuedNodes.size() > 0) {
         let startNode = queuedNodes.pop()
@@ -75,19 +82,15 @@ export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
 
 function processNeighborNodes(openNode: node, queuedNodes: Heap<node>, neighborNodes: node[]){
     neighborNodes.forEach(neighbor => {
-        if (!neighbor.closed) {
-            let weight = openNode.weight + 1
-            neighbor.weight = weight
-            neighbor.previous = openNode
+        neighbor.weight = openNode.weight + 1
+        neighbor.previous = openNode
+        neighbor.closed = true
 
-            queuedNodes.push(neighbor)
-        }
+        queuedNodes.push(neighbor)
     })
-
-    openNode.closed = true
 }
 
-function findNeighborNodes(node: node, width: number, height: number, allNodes: node[][]): node[] {
+export function findNeighborNodes(node: node, width: number, height: number, allNodes: node[][]): node[] {
     let neighbors: node[] = []
 
     if (node.x + 1 < width) {
@@ -106,7 +109,7 @@ function findNeighborNodes(node: node, width: number, height: number, allNodes: 
         neighbors.push(allNodes[node.y-1][node.x])
     }
 
-    return neighbors.filter(node => node.closed == false)
+    return neighbors.filter(node => node.closed === false)
 }
 
 export function getPathInOrder(finalNode: node): node[]{
