@@ -14,12 +14,14 @@ export function findShortestPath(start: node, end: node, grid: node[][]): node[]
     //set start and end weights to 0
     let sNode = grid[start.y][start.x]
     sNode.weight = 0
+    sNode.closed = true
     queuedNodes.push(sNode)
 
     while (queuedNodes.size() > 0) {
         let openNode = queuedNodes.pop()
 
         if (openNode.key === end.key) {
+            console.log(visitedNodes)
              visitedNodes.push(openNode) 
              return visitedNodes
         }
@@ -51,19 +53,19 @@ export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
     sNode.weight = 0
     sNode.closed = true
 
-    let eNode = grid[end.y][start.x]
+    let eNode = grid[end.y][end.x]
     eNode.weight = 0
-    sNode.closed = true
+    eNode.closed = true
 
     //push start and end
     queuedNodes.push(sNode)
     reverseQueuedNodes.push(eNode)
 
-    while (queuedNodes.size() > 0) {
+    while (queuedNodes.size() > 0 && reverseQueuedNodes.size() > 0) {
         let startNode = queuedNodes.pop()
         let reverseNode = reverseQueuedNodes.pop()
 
-        if(startNode.key === reverseNode.key){
+        if(startNode.key === reverseNode.key || (startNode.previous && startNode.previous.key === reverseNode.key)){
             visitedNodes.push(startNode, reverseNode)
             return visitedNodes
         }
