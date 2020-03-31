@@ -11,7 +11,8 @@ interface props {
 
 export default function Item(props: props){
 
-    const [color] = useState(new Animated.Value(0))
+    const [color, setColor] = useState(new Animated.Value(0))
+    const [rotate] = useState(new Animated.Value(0))
 
     props.forwardRef((value: number) => animateColor(value))
     
@@ -20,21 +21,38 @@ export default function Item(props: props){
         outputRange: ['black','grey' ,'#6495ED', 'yellow']
     })
 
+    var bgRotate = rotate.interpolate({
+        inputRange: [0, 100],
+        outputRange: ['0deg', '360deg']
+    })
+
     function animateColor(value: number){
-        Animated.timing(
-            color,
-            { toValue: value, duration: 1000 }
-        ).start()
+        Animated.parallel([
+            Animated.timing(
+                color,
+                { toValue: value, duration: 1000 }
+            ),
+            Animated.timing(
+                rotate,
+                {toValue: 100, duration: 1000} 
+            )
+
+        ]).start()
     }
 
-    if(props.selected){animateColor(-2)}
+    if(props.selected){
+        Animated.timing(
+            color,
+            { toValue: -2, duration: 500 }
+        ).start()
+    }
 
     return (
         <TouchableOpacity 
         onPress={() => props.onSelect(props.id)}
         style={[Style.Item,{height: Dimensions.get('window').width / 20}]}>
             <View  style={Style.View}>
-                <Animated.View style={[Style.View, {backgroundColor: bgColor}]} />
+                <Animated.View style={[Style.View, {backgroundColor: bgColor, transform: [{ rotate: bgRotate  }]}]} />
             </View>
         </TouchableOpacity>
     )
