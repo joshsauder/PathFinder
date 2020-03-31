@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Button, Text } from 'react-native';
+import { View, Button, Text, Dimensions } from 'react-native';
+import Styles from '../../styles/TopNav'
 
 interface props {
     step: number,
@@ -20,9 +21,16 @@ export default function SetupPoints({step, onSubmit}){
     }
 
     return (
-        <View>
-            <Text>{text}</Text>
-            <Button title="Find Path" onPress={onSubmit} disabled={step < 3}/>
+        <View style={{flexDirection: "row"}}>
+            <Text style={[Styles.itemMargin, {width: Dimensions.get("window").width/3, alignItems: "center"}]}>{text}</Text>
+            <View style={[Styles.itemMargin, {width: Dimensions.get("window").width/3, alignItems: "center", flexDirection: "row"}]}>
+                <View style={Styles.buttonMargin}>
+                    <Button title="Find Path" onPress={onSubmit} disabled={step < 3}/>
+                </View>
+                <View style={Styles.buttonMargin}>
+                    <Button title="Reset" onPress={() => alert("button clicked")} />
+                </View>
+            </View>
         </View>
 
     )

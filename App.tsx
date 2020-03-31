@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Dimensions } from 'react-native';
-import AlgorithmPicker from './components/TopNav/AlgorithmPicker'
 import { Grid } from './components/Grid/Grid'
 import Style from './styles/App'
+import Nav from './components/TopNav/Nav';
 
 export default function App() {
 
@@ -10,7 +10,7 @@ export default function App() {
   
   return (
       <View style={[Style.header, {width: Dimensions.get('window').width - 10 }]}>
-        <AlgorithmPicker algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} />
+        <Nav algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} step={1} onSubmit={() => alert('test')} />
         <Grid algorithm={algorithm} />
       </View>
   );
