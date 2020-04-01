@@ -30,11 +30,11 @@ export default function Item(props: props){
         Animated.parallel([
             Animated.timing(
                 color,
-                { toValue: value, duration: 1000 }
+                { toValue: value, duration: 500 }
             ),
             Animated.timing(
                 rotate,
-                {toValue: 100, duration: 1000} 
+                {toValue: 100, duration: 500} 
             )
 
         ]).start()

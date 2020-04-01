@@ -38,7 +38,7 @@ export default function App() {
       <View style={[Style.header, {width: Dimensions.get('window').width - 10 }]}>
         <Nav algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} step={step} />
         <Grid algorithm={algorithm} setStep={(step: number) => setStep(step)} step={step} />
-        <ButtonView onSubmit={() => setStep(4)} step={step}/>
+        <ButtonView onSubmit={() => setStep(4)} onReset={() => setStep(1)} step={step}/>
       </View>
     </View>
   );

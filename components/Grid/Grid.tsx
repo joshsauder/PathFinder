@@ -44,6 +44,9 @@ export class Grid extends Component<Props, State> {
         if(this.props.step === 4 && prevProps.step !== this.props.step){
             this.determinePath()
         }
+        else if(this.props.step === 1 && prevProps.step !== this.props.step){
+            this.resetToInit()
+        }
     }
 
     determinePath = () => {
@@ -77,12 +80,12 @@ export class Grid extends Component<Props, State> {
         visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](-1)
-            }, 100*index)
+            }, 80*index)
         })
         path.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](1)
-            }, 100*(index + visitiedNodes.length))
+            }, 80*(index + visitiedNodes.length))
         })
     }
 
@@ -97,6 +100,13 @@ export class Grid extends Component<Props, State> {
             }
 
             return state
+        })
+    }
+
+    resetToInit = () => {
+        //callback needed to reset grid
+        this.setState({start: undefined, end: undefined, graph: []}, () => {
+            this.setupGrid()
         })
     }
 

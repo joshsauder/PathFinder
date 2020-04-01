@@ -5,10 +5,11 @@ import Styles from '../../styles/TopNav'
 
 interface props {
     onSubmit: () => void
-    step: string
+    onReset: () => void
+    step: number
 }
 
-export default function BottomNav({onSubmit, step}){
+export default function BottomNav({onSubmit, onReset, step}: props){
 
     return (
         <View style={Styles.buttonMargin}>
@@ -16,7 +17,7 @@ export default function BottomNav({onSubmit, step}){
                 <Button full onPress={onSubmit} disabled={step < 3} style={{backgroundColor: 'white'}}><Text style={{color: "black"}}>Find Path</Text></Button>
             </View>
             <View>
-                <Button full onPress={() => alert("button clicked")} style={{backgroundColor: 'white'}}><Text style={{color: "black"}}>Reset</Text></Button>
+                <Button full onPress={onReset} style={{backgroundColor: 'white'}}><Text style={{color: "black"}}>Reset</Text></Button>
             </View>
         </View>
     )
