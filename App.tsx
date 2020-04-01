@@ -1,13 +1,36 @@
 import React, { useState } from 'react';
 import { View, Dimensions } from 'react-native';
+import {AppLoading} from 'expo'
 import { Grid } from './components/Grid/Grid'
-import Style from './styles/App'
 import Nav from './components/TopNav/Nav';
+
+import Style from './styles/App'
+
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      ...Ionicons.font,
+  })
+}
 
 export default function App() {
 
   const [algorithm, setAlgorithm] = useState('Dijkstra')
-  
+  const [fontsLoaded, setFontsLoaded] = useState(false)
+
+  if(!fontsLoaded){
+    return (
+      <AppLoading 
+      startAsync={fetchFonts}
+      onFinish={() => setFontsLoaded(true)}
+      />
+    )
+  }
+
   return (
       <View style={[Style.header, {width: Dimensions.get('window').width - 10 }]}>
         <Nav algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} step={1} onSubmit={() => alert('test')} />

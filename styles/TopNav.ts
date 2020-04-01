@@ -4,11 +4,10 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 15
+        alignItems: "center"
     },
     itemMargin: {
-        paddingLeft: 20,
+        paddingLeft: 5,
         paddingRight: 20
     },
     buttonMargin: {

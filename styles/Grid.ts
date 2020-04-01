@@ -2,8 +2,7 @@ import {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
     MainContainer: {
-        flex: 1,
-        marginVertical: 20,
+        marginTop: 10
     },
     Item: {
         alignItems: 'center',

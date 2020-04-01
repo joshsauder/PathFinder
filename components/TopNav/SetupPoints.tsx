@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Button, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
+import {Button} from 'native-base'
 import Styles from '../../styles/TopNav'
 
 interface props {
@@ -25,10 +26,10 @@ export default function SetupPoints({step, onSubmit}){
             <Text style={[Styles.itemMargin, {width: Dimensions.get("window").width/3, alignItems: "center"}]}>{text}</Text>
             <View style={[Styles.itemMargin, {width: Dimensions.get("window").width/3, alignItems: "center", flexDirection: "row"}]}>
                 <View style={Styles.buttonMargin}>
-                    <Button title="Find Path" onPress={onSubmit} disabled={step < 3}/>
+                    <Button onPress={onSubmit} disabled={step < 3}><Text>Find Path</Text></Button>
                 </View>
                 <View style={Styles.buttonMargin}>
-                    <Button title="Reset" onPress={() => alert("button clicked")} />
+                    <Button onPress={() => alert("button clicked")}><Text>Reset</Text></Button>
                 </View>
             </View>
         </View>

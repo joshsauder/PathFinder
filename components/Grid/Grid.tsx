@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {View, FlatList, PanResponderInstance, PanResponder, Animated} from 'react-native';
+import {FlatList} from 'react-native';
+import Style from '../../styles/Grid'
 import Item from "./Item"
 import {node} from '../../models/Graph';
 import {findShortestPath, getPathInOrder, twoWayDijkstra} from '../../algorithms/Dijkstra'
@@ -127,7 +128,8 @@ export class Grid extends Component<Props, State> {
 
     render(){
         return (
-                <FlatList 
+                <FlatList
+                style={Style.MainContainer} 
                 data= {this.renderData()}
                 scrollEnabled = {false}
                 renderItem={({item}) => 
