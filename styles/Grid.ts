@@ -8,10 +8,11 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
-        margin: 1,
+        margin: 1
     },
     View: { 
         width: '100%',
-        height: '100%'
+        height: '100%',
+        borderRadius: 3
     }
 })

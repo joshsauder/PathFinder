@@ -51,7 +51,7 @@ export default function Item(props: props){
         <TouchableOpacity 
         onPress={() => props.onSelect(props.id)}
         style={[Style.Item,{height: Dimensions.get('window').width / 20}]}>
-            <View  style={Style.View} >
+            <View style={Style.View} >
                 <Animated.View 
                 style={[Style.View, 
                     {backgroundColor: bgColor, 

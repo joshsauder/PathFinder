@@ -15,7 +15,7 @@ export default function BottomNav({onSubmit, step}){
             <View style={Styles.buttonMargin}>
                 <Button full onPress={onSubmit} disabled={step < 3}><Text>Find Path</Text></Button>
             </View>
-            <View style={Styles.buttonMargin}>
+            <View>
                 <Button full onPress={() => alert("button clicked")}><Text>Reset</Text></Button>
             </View>
         </View>
