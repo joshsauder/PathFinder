@@ -13,10 +13,10 @@ export default function AlgorithmPicker(props){
     return (
         <Picker
             selectedValue={props.algorithm}
-            iosHeader="Select an Algorithm"
-            iosIcon={<Icon name="arrow-down" />}
+            iosIcon={<Icon name="arrow-down" style={{color: 'white'}}/>}
             onValueChange={(value: string) => props.setAlgorithm(value)}
             style={{width: Dimensions.get("window").width/3 - 10}}
+            textStyle={{ color: "white" }}
             >
                 <Picker.Item label="Dijkstra" value="Dijkstra"/>
                 <Picker.Item label="Bidirectional Dijkstra" value="BiD" />

@@ -7,5 +7,9 @@ export default StyleSheet.create({
         marginRight: 5,
         marginTop: 50,
         position: "absolute"
+    },
+    background: {
+        backgroundColor: 'black',
+        flex: 1
     }
 })

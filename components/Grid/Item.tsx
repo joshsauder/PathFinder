@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {TouchableOpacity, Dimensions, View, Animated, GestureResponderHandlers} from 'react-native'
+import {TouchableOpacity, Dimensions, View, Animated} from 'react-native'
 import Style from '../../styles/Grid'
 
 interface props {
@@ -18,7 +18,7 @@ export default function Item(props: props){
     
     var bgColor = color.interpolate({
         inputRange: [ -2,-1,0, 1],
-        outputRange: ['black','grey' ,'#6495ED', 'yellow']
+        outputRange: ['black','grey' ,'#9575CD', 'yellow']
     })
 
     var bgRotate = rotate.interpolate({
@@ -53,10 +53,10 @@ export default function Item(props: props){
         style={[Style.Item,{height: Dimensions.get('window').width / 20}]}>
             <View style={Style.View} >
                 <Animated.View 
-                style={[Style.View, 
-                    {backgroundColor: bgColor, 
-                    transform: [{ rotate: bgRotate  }]}]} 
-                />
+                    style={[Style.View, 
+                        {backgroundColor: bgColor, 
+                        transform: [{ rotate: bgRotate  }]}]} 
+                    />
             </View>
         </TouchableOpacity>
     )

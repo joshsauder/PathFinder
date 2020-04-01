@@ -34,10 +34,12 @@ export default function App() {
   }
 
   return (
+    <View style={Style.background}>
       <View style={[Style.header, {width: Dimensions.get('window').width - 10 }]}>
         <Nav algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} step={step} onSubmit={() => alert('test')} />
         <Grid algorithm={algorithm} setStep={(step: number) => setStep(step)} />
         <ButtonView onSubmit={() => alert('test')} step={step}/>
       </View>
+    </View>
   );
 }

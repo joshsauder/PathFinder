@@ -25,8 +25,8 @@ export default function SetupPoints({step, onSubmit}){
     }
 
     return (
-        <Text style={Styles.textMargin}>
-            {"Next Step \n" + text}
+        <Text style={Styles.textStyle}>
+            {"Next Step: \n" + text}
         </Text>
 
     )

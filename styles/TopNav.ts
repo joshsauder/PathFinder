@@ -6,9 +6,10 @@ export default StyleSheet.create({
         flexDirection: "row",
         alignItems: "center"
     },
-    textMargin: {
+    textStyle: {
         marginLeft: 'auto',
-        marginRight: 10
+        marginRight: 10,
+        color: 'white'
     },
 
     buttonMargin: {
