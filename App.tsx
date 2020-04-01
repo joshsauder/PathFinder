@@ -22,6 +22,7 @@ export default function App() {
 
   const [algorithm, setAlgorithm] = useState('Dijkstra')
   const [fontsLoaded, setFontsLoaded] = useState(false)
+  const [step, setStep] = useState(1)
 
   if(!fontsLoaded){
     return (
@@ -34,9 +35,9 @@ export default function App() {
 
   return (
       <View style={[Style.header, {width: Dimensions.get('window').width - 10 }]}>
-        <Nav algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} step={1} onSubmit={() => alert('test')} />
-        <Grid algorithm={algorithm} />
-        <ButtonView onSubmit={() => alert('test')} step={1}/>
+        <Nav algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} step={step} onSubmit={() => alert('test')} />
+        <Grid algorithm={algorithm} setStep={(step: number) => setStep(step)} />
+        <ButtonView onSubmit={() => alert('test')} step={step}/>
       </View>
   );
 }

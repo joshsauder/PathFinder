@@ -7,8 +7,8 @@ export default StyleSheet.create({
         alignItems: "center"
     },
     textMargin: {
-        marginLeft: 20,
-        alignItems: "center"
+        marginLeft: 'auto',
+        marginRight: 10
     },
 
     buttonMargin: {

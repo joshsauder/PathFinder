@@ -15,10 +15,13 @@ export default function SetupPoints({step, onSubmit}){
     switch(step){
         case 1:
             text = "Select a Starting Point"
+            break;
         case 2:
             text = "Select a Ending Point"
+            break;
         case 3:
             text = "Select any walls and click \"Find Wall\" "
+            break;
     }
 
     return (

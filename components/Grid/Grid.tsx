@@ -12,11 +12,11 @@ interface State {
     start: node,
     end: node,
     graph: node[][],
-    dragging: boolean
 }
 
 interface Props {
     algorithm: string
+    setStep: (step: number) => void
 }
 
 export class Grid extends Component<Props, State> {
@@ -29,8 +29,7 @@ export class Grid extends Component<Props, State> {
             start: undefined,
             end: undefined,
             selected: new Map(),
-            graph: [],
-            dragging: false
+            graph: []
         }
 
         this.itemRefs = {}
@@ -90,7 +89,7 @@ export class Grid extends Component<Props, State> {
         this.setState(state => {
             for(let c = 0; c < this.state.numCols; c++){
                 let row: node[] = []
-                for(let r = 0; r < 20; r++){
+                for(let r = 0; r < 25; r++){
                     row.push({key: `${r},${c}`,x: r, y: c, previous:null, weight: Infinity, closed: false, wall: false})
                 }
                 state.graph.push(row)
@@ -103,9 +102,18 @@ export class Grid extends Component<Props, State> {
     itemSelected = (id: string) => {
         let coordinates = id.split(',')
         let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false, wall: false}
-        if(this.state.start === undefined){this.setState({start: {...selectedNode}})} 
-        else if(this.state.start.key === id){this.setState({start: undefined})} 
-        else {this.setState({end: {...selectedNode}})}
+        if(this.state.start === undefined){
+            this.setState({start: {...selectedNode}})
+            this.props.setStep(2)
+        } 
+        else if(this.state.start.key === id){
+            this.setState({start: undefined})
+            this.props.setStep(1)
+        } 
+        else {
+            this.setState({end: {...selectedNode}})
+            this.props.setStep(3)
+        }
 
         this.setState(state =>{
             state.selected.set(id, !state.selected.get(id))
