@@ -22,17 +22,9 @@ export default function SetupPoints({step, onSubmit}){
     }
 
     return (
-        <View style={{flexDirection: "row"}}>
-            <Text style={[Styles.itemMargin, {width: Dimensions.get("window").width/3, alignItems: "center"}]}>{text}</Text>
-            <View style={[Styles.itemMargin, {width: Dimensions.get("window").width/3, alignItems: "center", flexDirection: "row"}]}>
-                <View style={Styles.buttonMargin}>
-                    <Button onPress={onSubmit} disabled={step < 3}><Text>Find Path</Text></Button>
-                </View>
-                <View style={Styles.buttonMargin}>
-                    <Button onPress={() => alert("button clicked")}><Text>Reset</Text></Button>
-                </View>
-            </View>
-        </View>
+        <Text style={Styles.textMargin}>
+            {text}
+        </Text>
 
     )
 

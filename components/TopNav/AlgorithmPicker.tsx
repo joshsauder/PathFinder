@@ -16,7 +16,7 @@ export default function AlgorithmPicker(props){
             iosHeader="Select an Algorithm"
             iosIcon={<Icon name="arrow-down" />}
             onValueChange={(value: string) => props.setAlgorithm(value)}
-            style={[Styles.itemMargin, {width: Dimensions.get("window").width/3 - 10, alignItems: "center"}]}
+            style={{width: Dimensions.get("window").width/3 - 10}}
             >
                 <Picker.Item label="Dijkstra" value="Dijkstra"/>
                 <Picker.Item label="Bidirectional Dijkstra" value="BiD" />

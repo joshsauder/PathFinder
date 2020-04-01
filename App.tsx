@@ -3,6 +3,7 @@ import { View, Dimensions } from 'react-native';
 import {AppLoading} from 'expo'
 import { Grid } from './components/Grid/Grid'
 import Nav from './components/TopNav/Nav';
+import ButtonView from './components/BottomNav/ButtonView'
 
 import Style from './styles/App'
 
@@ -35,6 +36,7 @@ export default function App() {
       <View style={[Style.header, {width: Dimensions.get('window').width - 10 }]}>
         <Nav algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} step={1} onSubmit={() => alert('test')} />
         <Grid algorithm={algorithm} />
+        <ButtonView onSubmit={() => alert('test')} step={1}/>
       </View>
   );
 }

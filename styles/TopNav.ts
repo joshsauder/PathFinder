@@ -6,12 +6,12 @@ export default StyleSheet.create({
         flexDirection: "row",
         alignItems: "center"
     },
-    itemMargin: {
-        paddingLeft: 5,
-        paddingRight: 20
+    textMargin: {
+        marginLeft: 20,
+        alignItems: "center"
     },
+
     buttonMargin: {
-        paddingLeft: 10,
-        paddingRight: 10
+        paddingVertical: 10
     }
 })
