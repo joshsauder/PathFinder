@@ -13,10 +13,10 @@ export default function BottomNav({onSubmit, step}){
     return (
         <View style={Styles.buttonMargin}>
             <View style={Styles.buttonMargin}>
-                <Button full onPress={onSubmit} disabled={step < 3}><Text>Find Path</Text></Button>
+                <Button full onPress={onSubmit} disabled={step < 3} style={{backgroundColor: 'white'}}><Text style={{color: "black"}}>Find Path</Text></Button>
             </View>
             <View>
-                <Button full onPress={() => alert("button clicked")}><Text>Reset</Text></Button>
+                <Button full onPress={() => alert("button clicked")} style={{backgroundColor: 'white'}}><Text style={{color: "black"}}>Reset</Text></Button>
             </View>
         </View>
     )

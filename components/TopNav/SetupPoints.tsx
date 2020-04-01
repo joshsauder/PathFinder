@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, Dimensions } from 'react-native';
-import {Button} from 'native-base'
+import { Text } from 'react-native';
 import Styles from '../../styles/TopNav'
 
 interface props {

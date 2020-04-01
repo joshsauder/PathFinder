@@ -18,7 +18,7 @@ export default function Item(props: props){
     
     var bgColor = color.interpolate({
         inputRange: [ -2,-1,0, 1],
-        outputRange: ['black','grey' ,'#9575CD', 'yellow']
+        outputRange: ['#9E9E9E','#F06292' ,'#9575CD', 'white']
     })
 
     var bgRotate = rotate.interpolate({
