@@ -9,15 +9,14 @@ interface props {
     algorithm: string
     setAlgorithm: (value: string) => void
     step: number,
-    onSubmit: () => void
 }
 
-export default function Nav({algorithm, setAlgorithm, step, onSubmit}){
+export default function Nav({algorithm, setAlgorithm, step}){
 
     return (
         <View style={Styles.container}>
             <AlgorithmPicker algorithm={algorithm} setAlgorithm={setAlgorithm}/>
-            <SetupPoints step={step} onSubmit={onSubmit}/>
+            <SetupPoints step={step} />
         </View>
     )
 }

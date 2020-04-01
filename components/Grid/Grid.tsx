@@ -8,7 +8,6 @@ import {BreadthFirstSearch} from '../../algorithms/BFS'
 
 interface State {
     numCols: number,
-    selected: Map<string, boolean>
     start: node,
     end: node,
     graph: node[][],
@@ -17,10 +16,12 @@ interface State {
 interface Props {
     algorithm: string
     setStep: (step: number) => void
+    step: number
 }
 
 export class Grid extends Component<Props, State> {
     itemRefs: any;
+    wallRefs: any;
 
     constructor(props){
         super(props)
@@ -28,11 +29,11 @@ export class Grid extends Component<Props, State> {
             numCols: 20, 
             start: undefined,
             end: undefined,
-            selected: new Map(),
             graph: []
         }
 
         this.itemRefs = {}
+        this.wallRefs = {}
     }
 
     componentDidMount(){
@@ -40,7 +41,7 @@ export class Grid extends Component<Props, State> {
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(this.state.start && this.state.end && (this.state.start !== prevState.start || this.state.end !== prevState.end)){
+        if(this.props.step === 4 && prevProps.step !== this.props.step){
             this.determinePath()
         }
     }
@@ -87,10 +88,10 @@ export class Grid extends Component<Props, State> {
 
     setupGrid = () => {
         this.setState(state => {
-            for(let c = 0; c < this.state.numCols; c++){
+            for(let r = 0; r < 25; r++){
                 let row: node[] = []
-                for(let r = 0; r < 25; r++){
-                    row.push({key: `${r},${c}`,x: r, y: c, previous:null, weight: Infinity, closed: false, wall: false})
+                for(let c = 0; c < this.state.numCols; c++){
+                    row.push({key: `${c},${r}`,x: c, y: r, previous:null, weight: Infinity, closed: false, wall: false})
                 }
                 state.graph.push(row)
             }
@@ -100,25 +101,28 @@ export class Grid extends Component<Props, State> {
     }
 
     itemSelected = (id: string) => {
+        let {start, end, graph } = this.state
         let coordinates = id.split(',')
         let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false, wall: false}
-        if(this.state.start === undefined){
-            this.setState({start: {...selectedNode}})
-            this.props.setStep(2)
-        } 
-        else if(this.state.start.key === id){
-            this.setState({start: undefined})
-            this.props.setStep(1)
-        } 
-        else {
-            this.setState({end: {...selectedNode}})
-            this.props.setStep(3)
-        }
 
-        this.setState(state =>{
-            state.selected.set(id, !state.selected.get(id))
-            return state
-        })
+        if(start && end){
+            alert("hit")
+            this.itemRefs[id](-2)
+            selectedNode.wall = true
+
+            graph[selectedNode.y][selectedNode.x] = selectedNode
+        }else {
+            if(start === undefined){
+                this.setState({start: {...selectedNode}})
+                this.props.setStep(2)
+            }else if(start.key === id){
+                this.setState({start: undefined})
+                this.props.setStep(1)
+            }else {
+                this.setState({end: {...selectedNode}})
+                this.props.setStep(3)
+            }
+        }
     }
 
     renderData = (): node[] => {
@@ -135,6 +139,7 @@ export class Grid extends Component<Props, State> {
     }
 
     render(){
+        let {start, end} = this.state
         return (
                 <FlatList
                 style={Style.MainContainer} 
@@ -143,7 +148,7 @@ export class Grid extends Component<Props, State> {
                 renderItem={({item}) => 
                     <Item id={item.key} 
                         onSelect={this.itemSelected} 
-                        selected={!!this.state.selected.get(item.key)} 
+                        selected={(start && start.key === item.key) || (end && end.key === item.key)} 
                         forwardRef={(c: (value: number) => void) => {this.setReference(c, item.key)}}
                         />}
                 numColumns={this.state.numCols}

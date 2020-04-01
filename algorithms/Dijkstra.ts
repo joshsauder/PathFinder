@@ -21,7 +21,6 @@ export function findShortestPath(start: node, end: node, grid: node[][]): node[]
         let openNode = queuedNodes.pop()
 
         if (openNode.key === end.key) {
-            console.log(visitedNodes)
              visitedNodes.push(openNode) 
              return visitedNodes
         }

@@ -4,10 +4,9 @@ import Styles from '../../styles/TopNav'
 
 interface props {
     step: number,
-    onSubmit: () => void
 }
 
-export default function SetupPoints({step, onSubmit}){
+export default function SetupPoints({step}){
 
     let text: string
 
@@ -20,6 +19,9 @@ export default function SetupPoints({step, onSubmit}){
             break;
         case 3:
             text = "Select any walls and click \"Find Wall\" "
+            break;
+        case 4:
+            text = "Let us generate a path from start to finish"
             break;
     }
 
