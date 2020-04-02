@@ -11,8 +11,9 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
     let visitedNodes: node[] = []
 
     let sNode = grid[start.y][start.x]
-    sNode.weight = 0
-    sNode.heuristic = getHueristic(sNode, end)
+    //set start node f to 0
+    sNode.g = 0
+    sNode.heuristic = 0
     sNode.closed = true
     
     queuedNodes.push(sNode)
@@ -20,6 +21,7 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
     while(queuedNodes.size() > 0){
 
         let current = queuedNodes.pop()
+        current.closed = true
         visitedNodes.push(current)
 
         if(current.key === end.key){
@@ -34,11 +36,21 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
 
 function processNeighborNodes(neighborNodes: node[], queuedNodes: Heap<node>, currentNode: node, end: node){
     neighborNodes.forEach(node => {
-        node.previous = currentNode
-        node.weight = currentNode.weight + 1
-        node.heuristic = getHueristic(node, end)
+        let nodeG = currentNode.g + 1
+        
+        if(!node.open || node.g > nodeG){
+            node.previous = currentNode
+            node.g = nodeG
+            node.heuristic = getHueristic(node, end)
 
-        queuedNodes.push(node)
+            if(!node.open){
+                node.open = true
+                queuedNodes.push(node)
+            }else {
+                queuedNodes.updateItem(node)
+            }
+            
+        }
     })
 }
 

@@ -61,6 +61,7 @@ export class Grid extends Component<Props, State> {
                     let path = getPathInOrder(visitiedNodes.pop())
                     this.highLightGrid(path, visitiedNodes)
                 }
+                break;
 
             case "BiD":
                 visitiedNodes = twoWayDijkstra(start, end, graph)
@@ -69,6 +70,7 @@ export class Grid extends Component<Props, State> {
                     let startpath = getPathInOrder(visitiedNodes.pop())
                     this.highLightGrid([...startpath, ...endpath], visitiedNodes)
                 }
+                break;
             
             case "BFS":
                 visitiedNodes = BreadthFirstSearch(start, end, graph)
@@ -76,13 +78,16 @@ export class Grid extends Component<Props, State> {
                     let path = getPathInOrder(visitiedNodes.pop())
                     this.highLightGrid(path, visitiedNodes)
                 }
+                break;
             
             case "A*":
                 visitiedNodes = AStar(start, end, graph)
+                console.log(visitiedNodes)
                 if(visitiedNodes.length > 0){
                     let path = getPathInOrder(visitiedNodes.pop())
                     this.highLightGrid(path, visitiedNodes)
                 }
+                break;
         }
     }
 

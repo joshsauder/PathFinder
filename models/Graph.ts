@@ -5,9 +5,11 @@ export type node = {
     previous: node
     weight: number
     heuristic: number
+    g: number
     f: () => number
     wall: boolean
     closed: boolean
+    open: boolean
 }
 
 export function createNode(key: string, x: number, y :number): node{
@@ -18,12 +20,14 @@ export function createNode(key: string, x: number, y :number): node{
         previous:null, 
         weight: Infinity, 
         closed: false, 
+        opened: false,
         wall: false, 
         heuristic: Infinity,
+        g: Infinity,
         f: getF
     }
 }
 
 function getF(): number {
-    return this.heuristic + this.weight
+    return this.heuristic + this.g
 }
