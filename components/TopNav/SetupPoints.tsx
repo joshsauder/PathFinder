@@ -6,7 +6,7 @@ interface props {
     step: number,
 }
 
-export default function SetupPoints({step}){
+export default function SetupPoints({step}: props){
 
     let text: string
 

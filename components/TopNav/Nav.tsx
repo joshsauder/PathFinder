@@ -11,7 +11,7 @@ interface props {
     step: number,
 }
 
-export default function Nav({algorithm, setAlgorithm, step}){
+export default function Nav({algorithm, setAlgorithm, step}: props){
 
     return (
         <View style={Styles.container}>

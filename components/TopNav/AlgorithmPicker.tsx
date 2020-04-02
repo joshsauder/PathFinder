@@ -8,7 +8,7 @@ interface props {
     setAlgorithm: (value: string) => void
 }
 
-export default function AlgorithmPicker(props){
+export default function AlgorithmPicker(props: props){
 
     return (
         <Picker

@@ -40,7 +40,7 @@ export class Grid extends Component<Props, State> {
         this.setupGrid()
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps: Props, prevState: State){
         if(this.props.step === 4 && prevProps.step !== this.props.step){
             this.determinePath()
         }
@@ -111,12 +111,13 @@ export class Grid extends Component<Props, State> {
     }
 
     itemSelected = (id: string) => {
+        if(this.props.step === 4) return;
+
         let {start, end, graph } = this.state
         let coordinates = id.split(',')
         let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false, wall: false}
 
         if(start && end){
-            alert("hit")
             this.itemRefs[id](-2)
             selectedNode.wall = true
 
