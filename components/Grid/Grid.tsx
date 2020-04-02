@@ -94,7 +94,7 @@ export class Grid extends Component<Props, State> {
             for(let r = 0; r < 25; r++){
                 let row: node[] = []
                 for(let c = 0; c < this.state.numCols; c++){
-                    row.push({key: `${c},${r}`,x: c, y: r, previous:null, weight: Infinity, closed: false, wall: false})
+                    row.push({key: `${c},${r}`,x: c, y: r, previous:null, weight: Infinity, closed: false, wall: false, heuristic: Infinity})
                 }
                 state.graph.push(row)
             }
@@ -115,7 +115,7 @@ export class Grid extends Component<Props, State> {
 
         let {start, end, graph } = this.state
         let coordinates = id.split(',')
-        let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false, wall: false}
+        let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false, wall: false, heuristic: Infinity}
 
         if(start && end){
             this.itemRefs[id](-2)
