@@ -3,8 +3,9 @@ import {FlatList} from 'react-native';
 import Style from '../../styles/Grid'
 import Item from "./Item"
 import {node} from '../../models/Graph';
-import {findShortestPath, getPathInOrder, twoWayDijkstra} from '../../algorithms/Dijkstra'
+import {Dijkstras, getPathInOrder, twoWayDijkstra} from '../../algorithms/Dijkstra'
 import {BreadthFirstSearch} from '../../algorithms/BFS'
+import {AStar} from '../../algorithms/AStar'
 
 interface State {
     numCols: number,
@@ -50,17 +51,19 @@ export class Grid extends Component<Props, State> {
     }
 
     determinePath = () => {
+        let {start, end, graph} = this.state
         let visitiedNodes: node[]
+
         switch(this.props.algorithm){
             case "Dijkstra":
-                visitiedNodes = findShortestPath(this.state.start, this.state.end, this.state.graph)
+                visitiedNodes = Dijkstras(start, end, graph)
                 if(visitiedNodes.length > 0){
                     let path = getPathInOrder(visitiedNodes.pop())
                     this.highLightGrid(path, visitiedNodes)
                 }
 
             case "BiD":
-                visitiedNodes = twoWayDijkstra(this.state.start, this.state.end, this.state.graph)
+                visitiedNodes = twoWayDijkstra(start, end, graph)
                 if(visitiedNodes.length > 0){
                     let endpath = getPathInOrder(visitiedNodes.pop())
                     let startpath = getPathInOrder(visitiedNodes.pop())
@@ -68,7 +71,14 @@ export class Grid extends Component<Props, State> {
                 }
             
             case "BFS":
-                visitiedNodes = BreadthFirstSearch(this.state.start, this.state.end, this.state.graph)
+                visitiedNodes = BreadthFirstSearch(start, end, graph)
+                if(visitiedNodes.length > 0){
+                    let path = getPathInOrder(visitiedNodes.pop())
+                    this.highLightGrid(path, visitiedNodes)
+                }
+            
+            case "A*":
+                visitiedNodes = AStar(start, end, graph)
                 if(visitiedNodes.length > 0){
                     let path = getPathInOrder(visitiedNodes.pop())
                     this.highLightGrid(path, visitiedNodes)

@@ -2,7 +2,7 @@ import { node } from '../models/Graph'
 import {findNeighborNodes} from './Dijkstra'
 import Heap from 'heap'
 
-export function AStart(start: node, end: node, grid: node[][]): node[]{
+export function AStar(start: node, end: node, grid: node[][]): node[]{
     //sort based on f value
     let queuedNodes = new Heap<node>(function(a, b){
         return a.heuristic + a.weight - b.heuristic + b.weight
@@ -34,6 +34,7 @@ export function AStart(start: node, end: node, grid: node[][]): node[]{
 
 function processNeighborNodes(neighborNodes: node[], queuedNodes: Heap<node>, currentNode: node, end: node){
     neighborNodes.forEach(node => {
+        node.previous = currentNode
         node.weight = currentNode.weight + 1
         node.heuristic = getHueristic(node, end)
 

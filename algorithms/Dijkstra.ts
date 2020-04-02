@@ -2,7 +2,7 @@ import Heap from 'heap';
 import { node } from '../models/Graph'
 
 
-export function findShortestPath(start: node, end: node, grid: node[][]): node[]{
+export function Dijkstras(start: node, end: node, grid: node[][]): node[]{
     //sort by weight
     let queuedNodes = new Heap<node>(function (a, b) {
         return a.weight - b.weight;
