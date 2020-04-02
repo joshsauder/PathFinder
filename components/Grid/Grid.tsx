@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {FlatList} from 'react-native';
 import Style from '../../styles/Grid'
 import Item from "./Item"
-import {node} from '../../models/Graph';
+import {node, createNode} from '../../models/Graph';
 import {Dijkstras, getPathInOrder, twoWayDijkstra} from '../../algorithms/Dijkstra'
 import {BreadthFirstSearch} from '../../algorithms/BFS'
 import {AStar} from '../../algorithms/AStar'
@@ -104,7 +104,7 @@ export class Grid extends Component<Props, State> {
             for(let r = 0; r < 25; r++){
                 let row: node[] = []
                 for(let c = 0; c < this.state.numCols; c++){
-                    row.push({key: `${c},${r}`,x: c, y: r, previous:null, weight: Infinity, closed: false, wall: false, heuristic: Infinity})
+                    row.push(createNode(`${c},${r}`, c, r))
                 }
                 state.graph.push(row)
             }
@@ -125,7 +125,7 @@ export class Grid extends Component<Props, State> {
 
         let {start, end, graph } = this.state
         let coordinates = id.split(',')
-        let selectedNode = {x: parseInt(coordinates[0]), y: parseInt(coordinates[1]), key: id, previous:null, weight: Infinity, closed: false, wall: false, heuristic: Infinity}
+        let selectedNode = createNode(id, parseInt(coordinates[0]), parseInt(coordinates[1]))
 
         if(start && end){
             this.itemRefs[id](-2)

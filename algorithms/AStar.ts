@@ -5,7 +5,7 @@ import Heap from 'heap'
 export function AStar(start: node, end: node, grid: node[][]): node[]{
     //sort based on f value
     let queuedNodes = new Heap<node>(function(a, b){
-        return a.heuristic + a.weight - b.heuristic + b.weight
+        return a.f() - b.f()
     })
 
     let visitedNodes: node[] = []
