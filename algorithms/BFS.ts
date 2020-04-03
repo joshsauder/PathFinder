@@ -28,7 +28,7 @@ export function BreadthFirstSearch(start: node, end: node, grid: node[][]): node
 
     }
 
-    return []
+    return visitedNodes
 }
 
 function processNeighborNodes(neighborNodes: node[], currentNode: node){

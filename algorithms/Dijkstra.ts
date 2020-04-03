@@ -32,7 +32,7 @@ export function Dijkstras(start: node, end: node, grid: node[][]): node[]{
         visitedNodes.push(openNode)
     }
 
-    return []
+    return visitedNodes
 }
 
 export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {

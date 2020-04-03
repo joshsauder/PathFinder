@@ -53,40 +53,45 @@ export class Grid extends Component<Props, State> {
 
     determinePath = () => {
         let {start, end, graph} = this.state
-        let visitiedNodes: node[]
+        let visitedNodes: node[]
 
         switch(this.props.algorithm){
             case "Dijkstra":
-                visitiedNodes = Dijkstras(start, end, graph)
-                if(visitiedNodes.length > 0){
-                    let path = getPathInOrder(visitiedNodes.pop())
-                    this.highLightGrid(path, visitiedNodes)
+                visitedNodes = Dijkstras(start, end, graph)
+                if(visitedNodes.length > 0){
+                    let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
+                    this.highLightGrid(path, visitedNodes)
                 }
                 break;
 
             case "BiD":
-                visitiedNodes = twoWayDijkstra(start, end, graph)
-                if(visitiedNodes.length > 0){
-                    let endpath = getPathInOrder(visitiedNodes.pop())
-                    let startpath = getPathInOrder(visitiedNodes.pop())
-                    this.highLightGrid([...startpath, ...endpath], visitiedNodes)
+                visitedNodes = twoWayDijkstra(start, end, graph)
+                if(visitedNodes.length > 0){
+                    let start = visitedNodes[visitedNodes.length -2]
+                    let end = visitedNodes[visitedNodes.length -1]
+                    if(start.key === end.key || (start.previous && start.previous.key === end.key)){
+                        let endpath = getPathInOrder(visitedNodes.pop())
+                        let startpath = getPathInOrder(visitedNodes.pop())
+                        this.highLightGrid([...startpath, ...endpath], visitedNodes)
+                    }else {
+                        this.highLightGrid([], visitedNodes)
+                    }
                 }
                 break;
             
             case "BFS":
-                visitiedNodes = BreadthFirstSearch(start, end, graph)
-                if(visitiedNodes.length > 0){
-                    let path = getPathInOrder(visitiedNodes.pop())
-                    this.highLightGrid(path, visitiedNodes)
+                visitedNodes = BreadthFirstSearch(start, end, graph)
+                if(visitedNodes.length > 0){
+                    let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
+                    this.highLightGrid(path, visitedNodes)
                 }
                 break;
             
             case "A*":
-                visitiedNodes = AStar(start, end, graph)
-                console.log(visitiedNodes)
-                if(visitiedNodes.length > 0){
-                    let path = getPathInOrder(visitiedNodes.pop())
-                    this.highLightGrid(path, visitiedNodes)
+                visitedNodes = AStar(start, end, graph)
+                if(visitedNodes.length > 0){
+                    let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
+                    this.highLightGrid(path, visitedNodes)
                 }
                 break;
         }

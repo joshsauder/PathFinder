@@ -31,6 +31,8 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
         var neighborNodes: node[] = findNeighborNodes(current, grid[0].length, grid.length, grid)
         processNeighborNodes(neighborNodes, queuedNodes, current, start, end)
     }
+
+    return visitedNodes
     
 }
 
