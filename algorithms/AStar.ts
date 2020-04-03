@@ -29,19 +29,19 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
         }
 
         var neighborNodes: node[] = findNeighborNodes(current, grid[0].length, grid.length, grid)
-        processNeighborNodes(neighborNodes, queuedNodes, current, end)
+        processNeighborNodes(neighborNodes, queuedNodes, current, start, end)
     }
     
 }
 
-function processNeighborNodes(neighborNodes: node[], queuedNodes: Heap<node>, currentNode: node, end: node){
+function processNeighborNodes(neighborNodes: node[], queuedNodes: Heap<node>, currentNode: node, start: node, end: node){
     neighborNodes.forEach(node => {
         let nodeG = currentNode.g + 1
         
         if(!node.open || node.g > nodeG){
             node.previous = currentNode
             node.g = nodeG
-            node.heuristic = getHueristic(node, end)
+            node.heuristic = getHueristic(node, start, end)
 
             if(!node.open){
                 node.open = true
@@ -55,6 +55,16 @@ function processNeighborNodes(neighborNodes: node[], queuedNodes: Heap<node>, cu
 }
 
 
-function getHueristic(currentNode: node, end: node){
-    return Math.abs(currentNode.x - end.x) + Math.abs(currentNode.y - end.y)
+function getHueristic(currentNode: node, start: node, end: node){
+    //get the Manhattan distance
+    let dx = Math.abs(currentNode.x - end.x) 
+    let dy = Math.abs(currentNode.y - end.y)
+
+    //tie bracker that prefers straight lines
+    //http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#S7
+    let dx2 = Math.abs(currentNode.x- start.x)
+    let dy2 = Math.abs(currentNode.y- start.y)
+    let cross = Math.abs(dx*dy2 - dx2*dy)
+
+    return dx + dy + cross*0.001
 }
