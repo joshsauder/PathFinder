@@ -18,7 +18,7 @@ export default function Item(props: props){
     
     var bgColor = color.interpolate({
         inputRange: [ -2,-1,0, 1, 2],
-        outputRange: ['#EDE7F6','#F06292' ,'#9575CD', 'white', '#210B2C']
+        outputRange: ['#FFCA28','#F06292' ,'#9575CD', 'white', '#210B2C']
     })
 
     var bgRotate = rotate.interpolate({
@@ -27,17 +27,19 @@ export default function Item(props: props){
     })
 
     function animateColor(value: number){
-        Animated.parallel([
-            Animated.timing(
-                color,
-                { toValue: value, duration: 500 }
-            ),
-            Animated.timing(
-                rotate,
-                {toValue: 100, duration: 500} 
-            )
+        if(!props.selected){
+            Animated.parallel([
+                Animated.timing(
+                    color,
+                    { toValue: value, duration: 500 }
+                ),
+                Animated.timing(
+                    rotate,
+                    {toValue: 100, duration: 500} 
+                )
 
-        ]).start()
+            ]).start()
+        }
     }
 
     if(props.selected){

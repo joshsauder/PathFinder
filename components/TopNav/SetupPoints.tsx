@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from 'react-native';
+import { Text, Dimensions } from 'react-native';
 import Styles from '../../styles/TopNav'
 
 interface props {
@@ -26,7 +26,7 @@ export default function SetupPoints({step}: props){
     }
 
     return (
-        <Text style={Styles.textStyle}>
+        <Text style={[Styles.textStyle, {width: Dimensions.get('window').width/2}]}>
             {"Next Step: \n" + text}
         </Text>
 

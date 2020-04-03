@@ -13,9 +13,9 @@ export default function AlgorithmPicker(props: props){
     return (
         <Picker
             selectedValue={props.algorithm}
-            iosIcon={<Icon name="arrow-down" style={{color: 'white'}}/>}
+            iosIcon={<Icon name="arrow-down" style={{color: 'white', marginLeft: 5}}/>}
             onValueChange={(value: string) => props.setAlgorithm(value)}
-            style={{width: Dimensions.get("window").width/3 - 10}}
+            style={{width: Dimensions.get("window").width/3 - 5}}
             textStyle={{ color: "white" }}
             >
                 <Picker.Item label="Dijkstra" value="Dijkstra"/>
