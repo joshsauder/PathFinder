@@ -3,9 +3,10 @@ import {FlatList} from 'react-native';
 import Style from '../../styles/Grid'
 import Item from "./Item"
 import {node, createNode} from '../../models/Graph';
-import {Dijkstras, getPathInOrder, twoWayDijkstra} from '../../algorithms/Dijkstra'
+import {Dijkstras, twoWayDijkstra} from '../../algorithms/Dijkstra'
 import {BreadthFirstSearch} from '../../algorithms/BFS'
 import {AStar} from '../../algorithms/AStar'
+import {getPathInOrder} from '../../algorithms/Utils'
 
 interface State {
     numCols: number,
@@ -133,7 +134,7 @@ export class Grid extends Component<Props, State> {
         let selectedNode = createNode(id, parseInt(coordinates[0]), parseInt(coordinates[1]))
 
         if(start && end){
-            this.itemRefs[id](-2)
+            this.itemRefs[id](2)
             selectedNode.wall = true
 
             graph[selectedNode.y][selectedNode.x] = selectedNode

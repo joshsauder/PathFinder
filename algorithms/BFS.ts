@@ -1,5 +1,5 @@
 import { node } from '../models/Graph'
-import {findNeighborNodes} from './Dijkstra'
+import {findNeighborNodes} from './Utils'
 
 export function BreadthFirstSearch(start: node, end: node, grid: node[][]): node[]{
     //set up a queue

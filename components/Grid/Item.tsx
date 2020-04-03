@@ -17,8 +17,8 @@ export default function Item(props: props){
     props.forwardRef((value: number) => animateColor(value))
     
     var bgColor = color.interpolate({
-        inputRange: [ -2,-1,0, 1],
-        outputRange: ['#9E9E9E','#F06292' ,'#9575CD', 'white']
+        inputRange: [ -2,-1,0, 1, 2],
+        outputRange: ['#EDE7F6','#F06292' ,'#9575CD', 'white', '#311B92']
     })
 
     var bgRotate = rotate.interpolate({

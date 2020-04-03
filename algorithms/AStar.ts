@@ -1,5 +1,5 @@
 import { node } from '../models/Graph'
-import {findNeighborNodes} from './Dijkstra'
+import {findNeighborNodes} from './Utils'
 import Heap from 'heap'
 
 export function AStar(start: node, end: node, grid: node[][]): node[]{

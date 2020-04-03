@@ -20,7 +20,7 @@ export function createNode(key: string, x: number, y :number): node{
         previous:null, 
         weight: Infinity, 
         closed: false, 
-        opened: false,
+        open: false,
         wall: false, 
         heuristic: Infinity,
         g: Infinity,
