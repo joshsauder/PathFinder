@@ -1,11 +1,11 @@
 import {node, createNode} from '../models/Graph'
 
-test('Test Node Modal', () => {
+describe('Test Node Modal', () => {
 
     /*
     Test the creation of a node object
     */
-    describe('Create Node', () => {
+    it('Create Node', () => {
         let expected = {
             key: 'test',
             x: 1,
@@ -29,9 +29,11 @@ test('Test Node Modal', () => {
     /*
     Test the calculation of the F value for A*
     */
-    describe('Get F value', () => {
+    it('Get F value', () => {
         let actual: node = createNode('test', 1, 2)
+        actual.g = 1
+        actual.heuristic = 2
 
-        expect(actual.f).toEqual(3)
+        expect(actual.f()).toEqual(3)
     })
 })

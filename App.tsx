@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Dimensions } from 'react-native';
 import {AppLoading} from 'expo'
-import { Grid } from './components/Grid/Grid'
+import Grid from './components/Grid/Grid'
 import Nav from './components/TopNav/Nav';
 import ButtonView from './components/BottomNav/ButtonView'
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import {shallow, mount} from 'enzyme'
 import Grid from '../components/Grid/Grid'
+import {TouchableOpacity} from 'react-native'
 
 const createTestProps = (props: Object) => ({
     algorithm: 'BiD',
@@ -19,9 +20,12 @@ describe('Grid Component', () => {
 
     it('Test Number of Items', () => {
         let props = createTestProps({})
-        const GridComponent = shallow(<Grid {...props} />)
+        const GridComponent = mount(<Grid {...props} />)
 
-        expect(GridComponent.find('Item').length).toEqual(500)
+        //needed to allow graph to be made
+        setTimeout(() => {
+            expect(GridComponent.find(TouchableOpacity).length).toEqual(500)
+        }, 1000)
     })
 
 })

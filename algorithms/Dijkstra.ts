@@ -79,7 +79,7 @@ export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
         visitedNodes.push(startNode, reverseNode)
     }
 
-    return []
+    return visitedNodes
 }
 
 function processNeighborNodes(openNode: node, queuedNodes: Heap<node>, neighborNodes: node[]){

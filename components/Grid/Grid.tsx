@@ -21,7 +21,7 @@ interface Props {
     step: number
 }
 
-export class Grid extends Component<Props, State> {
+export default class Grid extends Component<Props, State> {
     itemRefs: any;
     wallRefs: any;
 

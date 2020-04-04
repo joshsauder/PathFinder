@@ -1,7 +1,6 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { Picker, Icon} from 'native-base'
-import Styles from '../../styles/TopNav'
 
 interface props {
     algorithm: string
