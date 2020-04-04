@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Blank Template (TypeScript)",
+    "name": "Path Finder",
     "slug": "PathFinder",
     "privacy": "public",
     "sdkVersion": "36.0.0",

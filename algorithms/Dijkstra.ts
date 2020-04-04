@@ -3,6 +3,14 @@ import { node } from '../models/Graph';
 import {findNeighborNodes} from './Utils';
 
 
+/**
+ * Dijkstra's Shortest Path Finder
+ * 
+ * @param start - the starting node
+ * @param end - the ending node
+ * @param grid - the grid of nodes 
+ * @returns - a list of nodes that were visited
+ */
 export function Dijkstras(start: node, end: node, grid: node[][]): node[]{
     //sort by weight
     let queuedNodes = new Heap<node>(function (a, b) {
@@ -35,6 +43,14 @@ export function Dijkstras(start: node, end: node, grid: node[][]): node[]{
     return visitedNodes
 }
 
+/**
+ * Bi-Directional Dijkstra's Shortest Path Finder
+ * 
+ * @param start - the starting node
+ * @param end - the ending node
+ * @param grid - the grid of nodes 
+ * @returns - a list of nodes that were visited
+ */
 export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
     let queuedNodes = new Heap<node>(function (a, b) {
         return a.weight - b.weight;
@@ -82,6 +98,15 @@ export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
     return visitedNodes
 }
 
+/**
+ *  Prevents each neighbor node from being processed again
+ *  Sets the weight to the openNode's weight + 1
+ *  Sets the previous node to the current node
+ * 
+ * @param openNode - the current open node
+ * @param queuedNodes - Min-Heap containing the queued nodes
+ * @param neighborNodes - Array of neighbor nodes to the openNode
+ */
 function processNeighborNodes(openNode: node, queuedNodes: Heap<node>, neighborNodes: node[]){
     neighborNodes.forEach(neighbor => {
         neighbor.weight = openNode.weight + 1

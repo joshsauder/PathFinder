@@ -1,5 +1,15 @@
 import { node } from '../models/Graph';
 
+/**
+ * Finds the current nodes' neighbor nodes 
+ * Neighbor nodes being the nodes above, below, left, and right.
+ * 
+ * @param node - Current node
+ * @param width - Width of graph
+ * @param height - Height of graph
+ * @param allNodes - List of nodes from the graph
+ * @returns - An array of neighbor nodes
+ */
 export function findNeighborNodes(node: node, width: number, height: number, allNodes: node[][]): node[] {
     let neighbors: node[] = []
 
@@ -22,6 +32,11 @@ export function findNeighborNodes(node: node, width: number, height: number, all
     return neighbors.filter(node => node.closed === false && node.wall === false)
 }
 
+/**
+ * Takes the target node and returns the nodes traversed to get to that node.
+ * 
+ * @param finalNode - The target node
+ */
 export function getPathInOrder(finalNode: node): node[]{
     let finalPath: node[] = []
     let current = {...finalNode}
