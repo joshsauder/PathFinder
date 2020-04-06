@@ -47,8 +47,7 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
 /**
  * Sets each Neighbor nodes previous node to the current node
  * Calculates the G and Hueristic values
- * If it has not been opened, sets the open value to true and places node in the Heap. 
- * Else, it will update the node in the Heap.
+ * Then pushes to Heap
  * 
  * @param neighborNodes - Array of neighbor nodes to the currentNode
  * @param queuedNodes - Min-Heap containing the queued nodes
@@ -65,6 +64,8 @@ function processNeighborNodes(neighborNodes: node[], queuedNodes: Heap<node>, cu
             node.g = nodeG
             node.heuristic = getHueristic(node, start, end)
 
+            // If it has not been opened, sets the open value to true and places node in the Heap. 
+            // Else, it will update the node in the Heap.
             if(!node.open){
                 node.open = true
                 queuedNodes.push(node)

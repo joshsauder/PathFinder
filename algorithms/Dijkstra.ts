@@ -23,11 +23,11 @@ export function Dijkstras(start: node, end: node, grid: node[][]): node[]{
     //set start and end weights to 0
     let sNode = grid[start.y][start.x]
     sNode.weight = 0
-    sNode.closed = true
     queuedNodes.push(sNode)
 
     while (queuedNodes.size() > 0) {
         let openNode = queuedNodes.pop()
+        openNode.closed = true
 
         if (openNode.key === end.key) {
              visitedNodes.push(openNode) 
@@ -67,11 +67,9 @@ export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
     //set start and end weights to 0
     let sNode = grid[start.y][start.x]
     sNode.weight = 0
-    sNode.closed = true
 
     let eNode = grid[end.y][end.x]
     eNode.weight = 0
-    eNode.closed = true
 
     //push start and end
     queuedNodes.push(sNode)
@@ -81,6 +79,10 @@ export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
         let startNode = queuedNodes.pop()
         let reverseNode = reverseQueuedNodes.pop()
 
+        startNode.closed = true
+        reverseNode.closed = true
+
+        //need to check if nodes are the same or if there one off
         if(startNode.key === reverseNode.key || (startNode.previous && startNode.previous.key === reverseNode.key)){
             visitedNodes.push(startNode, reverseNode)
             return visitedNodes
@@ -109,10 +111,20 @@ export function twoWayDijkstra(start: node, end: node, grid: node[][]): node[] {
  */
 function processNeighborNodes(openNode: node, queuedNodes: Heap<node>, neighborNodes: node[]){
     neighborNodes.forEach(neighbor => {
-        neighbor.weight = openNode.weight + 1
-        neighbor.previous = openNode
-        neighbor.closed = true
+        let weight = openNode.weight + 1
 
-        queuedNodes.push(neighbor)
+        if(!neighbor.open || neighbor.weight > weight){
+            neighbor.previous = openNode
+            neighbor.weight = weight
+
+            // If it has not been opened, sets the open value to true and places node in the Heap. 
+            // Else, it will update the node in the Heap.
+            if(!neighbor.open){
+                neighbor.open = true
+                queuedNodes.push(neighbor)
+            }else {
+                queuedNodes.updateItem(neighbor)
+            }
+        }
     })
 }
