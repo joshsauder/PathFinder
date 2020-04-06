@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Path Finding Visualization",
+    "description": "A tool that allows various path finding algorithms to be visualized in action. Current algorithms include Dijkstra's (unidirectional and bidirectional), A*, and Breadth-First Search.",
     "slug": "PathFindingVisualization",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -11,6 +12,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
+    "githubUrl": "https://github.com/joshsauder/PathFinder",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",

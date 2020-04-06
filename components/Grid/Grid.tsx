@@ -7,6 +7,7 @@ import {Dijkstras, twoWayDijkstra} from '../../algorithms/Dijkstra'
 import {BreadthFirstSearch} from '../../algorithms/BFS'
 import {AStar} from '../../algorithms/AStar'
 import {getPathInOrder} from '../../algorithms/Utils'
+import { DepthFirstSearch } from '../../algorithms/DFS';
 
 interface State {
     numCols: number,
@@ -89,6 +90,14 @@ export default class Grid extends Component<Props, State> {
             
             case "A*":
                 visitedNodes = AStar(start, end, graph)
+                if(visitedNodes.length > 0){
+                    let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
+                    this.highLightGrid(path, visitedNodes)
+                }
+                break;
+
+            case "DFS":
+                visitedNodes = DepthFirstSearch(start, end, graph)
                 if(visitedNodes.length > 0){
                     let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
                     this.highLightGrid(path, visitedNodes)
