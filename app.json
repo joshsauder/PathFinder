@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Path Finder",
-    "slug": "PathFinder",
+    "name": "Path Finding Visualization",
+    "slug": "PathFindingVisualization",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "SauderTech.PathFindingVisualization"
+    },
+    "android": {
+      "package": "SauderTech.PathFindingVisualization"
     }
   }
 }
