@@ -3,7 +3,6 @@ export type node = {
     x: number
     y: number
     previous: node
-    weight: number
     heuristic: number
     g: number
     f: () => number
@@ -25,7 +24,6 @@ export function createNode(key: string, x: number, y :number): node{
         x: x, 
         y: y, 
         previous:null, 
-        weight: Infinity, 
         closed: false, 
         open: false,
         wall: false, 

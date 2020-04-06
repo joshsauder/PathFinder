@@ -44,6 +44,7 @@ export default function Item(props: props){
         outputRange: ['0deg', '360deg']
     })
 
+    //change color and rotate at once.
     function animateColor(value: number){
         if(!props.selected){
             Animated.parallel([

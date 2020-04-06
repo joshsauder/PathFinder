@@ -48,90 +48,9 @@ export default class Grid extends Component<Props, State> {
             this.determinePath()
         }
         else if(this.props.step === 1 && prevProps.step !== this.props.step){
+            //reset button pushed
             this.resetToInit()
         }
-    }
-
-    determinePath = () => {
-        let {start, end, graph} = this.state
-        let visitedNodes: node[]
-
-        switch(this.props.algorithm){
-            case "Dijkstra":
-                visitedNodes = Dijkstras(start, end, graph)
-                if(visitedNodes.length > 0){
-                    let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
-                    this.highLightGrid(path, visitedNodes)
-                }
-                break;
-
-            case "BiD":
-                visitedNodes = TwoWayDijkstra(start, end, graph)
-                if(visitedNodes.length > 0){
-                    let start = visitedNodes[visitedNodes.length -2]
-                    let end = visitedNodes[visitedNodes.length -1]
-                    if(start.key === end.key || (start.previous && start.previous.key === end.key)){
-                        let endpath = getPathInOrder(visitedNodes.pop())
-                        let startpath = getPathInOrder(visitedNodes.pop())
-                        this.highLightGrid([...startpath, ...endpath], visitedNodes)
-                    }else {
-                        this.highLightGrid([], visitedNodes)
-                    }
-                }
-                break;
-            
-            case "BFS":
-                visitedNodes = BreadthFirstSearch(start, end, graph)
-                if(visitedNodes.length > 0){
-                    let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
-                    this.highLightGrid(path, visitedNodes)
-                }
-                break;
-            
-            case "A*":
-                visitedNodes = AStar(start, end, graph)
-                if(visitedNodes.length > 0){
-                    let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
-                    this.highLightGrid(path, visitedNodes)
-                }
-                break;
-            
-            case "BA*":
-                visitedNodes = TwoWayAStar(start, end, graph)
-                if(visitedNodes.length > 0){
-                    let start = visitedNodes[visitedNodes.length -2]
-                    let end = visitedNodes[visitedNodes.length -1]
-                    if(start.key === end.key || (start.previous && start.previous.key === end.key)){
-                        let endpath = getPathInOrder(visitedNodes.pop())
-                        let startpath = getPathInOrder(visitedNodes.pop())
-                        this.highLightGrid([...startpath, ...endpath], visitedNodes)
-                    }else {
-                        this.highLightGrid([], visitedNodes)
-                    }
-                }
-                break;
-
-            case "DFS":
-                visitedNodes = DepthFirstSearch(start, end, graph)
-                if(visitedNodes.length > 0){
-                    let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
-                    this.highLightGrid(path, visitedNodes)
-                }
-                break;
-        }
-    }
-
-    highLightGrid = (path: node[], visitiedNodes: node[]) => {
-        visitiedNodes.forEach((node, index) => {
-            setTimeout(() => {
-                this.itemRefs[node.key](-1)
-            }, 70*index)
-        })
-        path.forEach((node, index) => {
-            setTimeout(() => {
-                this.itemRefs[node.key](1)
-            }, 70*(index + visitiedNodes.length))
-        })
     }
 
     setupGrid = () => {
@@ -153,6 +72,80 @@ export default class Grid extends Component<Props, State> {
         //callback needed to reset grid
         this.setState({start: undefined, end: undefined, graph: []}, () => {
             this.setupGrid()
+        })
+    }
+
+    determinePath = () => {
+        let {start, end, graph} = this.state
+        let visitedNodes: node[]
+
+        switch(this.props.algorithm){
+            case "Dijkstra":
+                visitedNodes = Dijkstras(start, end, graph)
+                this.processUnidirectional(visitedNodes, end)
+                break;
+
+            case "BiD":
+                visitedNodes = TwoWayDijkstra(start, end, graph)
+                this.processBidirectional(visitedNodes)
+                break;
+            
+            case "BFS":
+                visitedNodes = BreadthFirstSearch(start, end, graph)
+                this.processUnidirectional(visitedNodes, end)
+                break;
+            
+            case "A*":
+                visitedNodes = AStar(start, end, graph)
+                this.processUnidirectional(visitedNodes, end)
+                break;
+            
+            case "BA*":
+                visitedNodes = TwoWayAStar(start, end, graph)
+                this.processBidirectional(visitedNodes)
+                break;
+
+            case "DFS":
+                visitedNodes = DepthFirstSearch(start, end, graph)
+                this.processUnidirectional(visitedNodes, end)
+                break;
+        }
+    }
+
+    processUnidirectional = (visitedNodes: node[], end: node) => {
+        if(visitedNodes.length > 0){
+            //check if path was found
+            let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
+            this.highLightGrid(path, visitedNodes)
+        }
+    }
+
+    processBidirectional = (visitedNodes: node[]) => {
+        if(visitedNodes.length > 0){
+            let start = visitedNodes[visitedNodes.length -2]
+            let end = visitedNodes[visitedNodes.length -1]
+            //check if path was found
+            if(start.key === end.key || (start.previous && start.previous.key === end.key)){
+                let endpath = getPathInOrder(visitedNodes.pop())
+                let startpath = getPathInOrder(visitedNodes.pop())
+                this.highLightGrid([...startpath, ...endpath], visitedNodes)
+            }else {
+                this.highLightGrid([], visitedNodes)
+            }
+        }
+    }
+
+    highLightGrid = (path: node[], visitiedNodes: node[]) => {
+        //change background color by reference. See setReference() for reason why this is done.
+        visitiedNodes.forEach((node, index) => {
+            setTimeout(() => {
+                this.itemRefs[node.key](-1)
+            }, 70*index)
+        })
+        path.forEach((node, index) => {
+            setTimeout(() => {
+                this.itemRefs[node.key](1)
+            }, 70*(index + visitiedNodes.length))
         })
     }
 
@@ -196,6 +189,8 @@ export default class Grid extends Component<Props, State> {
     }
 
     setReference = (item: (value: number) => void, id: string): void =>{
+        //this.setState is not optimal for changing the background color one-by-one of many nodes.
+        //changing by reference is much more optimal
         this.itemRefs[id] = item
     }
 
