@@ -1,6 +1,14 @@
 import { node } from '../models/Graph'
 import {findNeighborNodes} from './Utils'
 
+/**
+ * Depth-First Search Finder
+ * 
+ * @param start - the starting node
+ * @param end - the ending node
+ * @param grid - the grid of nodes 
+ * @returns - a list of nodes that were visited
+ */
 export function DepthFirstSearch(start: node, end: node, grid: node[][]): node[]{
     //set start and end weights to 0
     let sNode = grid[start.y][start.x]

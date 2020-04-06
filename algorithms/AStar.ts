@@ -10,7 +10,7 @@ import Heap from 'heap'
  * @param grid - the grid of nodes 
  * @returns - a list of nodes that were visited
  */
-export function AStar(start: node, end: node, grid: node[][]): node[]{
+export function AStar(start: node, end: node, grid: node[][], heuristic?: (currentNode: node, start: node, end: node) => number): node[]{
     //sort based on f value
     let queuedNodes = new Heap<node>(function(a, b){
         return a.f() - b.f()
@@ -18,15 +18,14 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
 
     let visitedNodes: node[] = []
 
+    //set start node weight to 0
     let sNode = grid[start.y][start.x]
-    //set start node f to 0
     sNode.g = 0
     sNode.heuristic = 0
     
     queuedNodes.push(sNode)
 
     while(queuedNodes.size() > 0){
-
         let current = queuedNodes.pop()
         current.closed = true
         visitedNodes.push(current)
@@ -36,11 +35,69 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
         }
 
         var neighborNodes: node[] = findNeighborNodes(current, grid[0].length, grid.length, grid)
-        processNeighborNodes(neighborNodes, queuedNodes, current, start, end)
+        processNeighborNodes(neighborNodes, queuedNodes, current, start, end, heuristic)
+    }
+
+    return visitedNodes  
+}
+
+export function TwoWayAStar(start: node, end: node, grid: node[][], heuristic?: (currentNode: node, start: node, end: node) => number): node[] {
+    let queuedNodes = new Heap<node>(function (a, b) {
+        return a.f() - b.f();
+    })
+
+    let reverseQueuedNodes = new Heap<node>(function (a, b) {
+        return (a.heuristic + a.g) - (b.heuristic + b.g);
+    })
+
+    let reverseGrid = JSON.parse(JSON.stringify(grid))
+
+    let visitedNodes: node[] = []
+    //allows for constant time lookup
+    let visitedKeys: {} = {}
+
+    //set start and end weights to 0
+    let sNode = grid[start.y][start.x]
+    sNode.g = 0
+    sNode.heuristic = 0
+
+    let eNode = reverseGrid[end.y][end.x]
+    eNode.g = 0
+    eNode.heuristic = 0
+
+    //push start and end
+    queuedNodes.push(sNode)
+    reverseQueuedNodes.push(eNode)
+
+    while (queuedNodes.size() > 0 && reverseQueuedNodes.size() > 0) {
+        let startNode = queuedNodes.pop()
+        let reverseNode = reverseQueuedNodes.pop()
+
+        startNode.closed = true
+        reverseNode.closed = true
+
+        //check if node keys are in keys object
+        if(visitedKeys[startNode.key] || visitedKeys[reverseNode.key]){
+            //push applicable nodes and return
+            visitedKeys[startNode.key] ? visitedNodes.push(startNode, visitedKeys[startNode.key]) : visitedNodes.push(reverseNode, visitedKeys[reverseNode.key])
+            return visitedNodes
+        }
+
+        //find neighbor nodes for both the start and reverse nodes and process
+        const neighborNodes = findNeighborNodes(startNode, grid[0].length, grid.length, grid);
+        processNeighborNodes(neighborNodes, queuedNodes, startNode, start, end, heuristic)
+
+        const reverseNeighborNodes = findNeighborNodes(reverseNode, reverseGrid[0].length, reverseGrid.length, reverseGrid);
+        processNeighborNodes(reverseNeighborNodes, reverseQueuedNodes, reverseNode, end, start, heuristic)
+
+        //add visitied nodes
+        visitedNodes.push(startNode, reverseNode)
+        visitedKeys[startNode.key] = startNode
+        visitedKeys[reverseNode.key] = reverseNode
+
     }
 
     return visitedNodes
-    
 }
 
 /**
@@ -54,14 +111,14 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
  * @param start - Starting node
  * @param end - Ending node
  */
-function processNeighborNodes(neighborNodes: node[], queuedNodes: Heap<node>, currentNode: node, start: node, end: node){
+function processNeighborNodes(neighborNodes: node[], queuedNodes: Heap<node>, currentNode: node, start: node, end: node, heuristic?: (currentNode: node, start: node, end: node) => number){
     neighborNodes.forEach(node => {
         let nodeG = currentNode.g + 1
         
         if(!node.open || node.g > nodeG){
             node.previous = currentNode
             node.g = nodeG
-            node.heuristic = getHueristic(node, start, end)
+            node.heuristic = heuristic ? heuristic(node, start, end) : getHueristic(node, start, end)
 
             // If it has not been opened, sets the open value to true and places node in the Heap. 
             // Else, it will update the node in the Heap.

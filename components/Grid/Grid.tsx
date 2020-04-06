@@ -3,9 +3,9 @@ import {FlatList} from 'react-native';
 import Style from '../../styles/Grid'
 import Item from "./Item"
 import {node, createNode} from '../../models/Graph';
-import {Dijkstras, twoWayDijkstra} from '../../algorithms/Dijkstra'
+import {Dijkstras, TwoWayDijkstra} from '../../algorithms/Dijkstra'
 import {BreadthFirstSearch} from '../../algorithms/BFS'
-import {AStar} from '../../algorithms/AStar'
+import {AStar, TwoWayAStar} from '../../algorithms/AStar'
 import {getPathInOrder} from '../../algorithms/Utils'
 import { DepthFirstSearch } from '../../algorithms/DFS';
 
@@ -66,7 +66,7 @@ export default class Grid extends Component<Props, State> {
                 break;
 
             case "BiD":
-                visitedNodes = twoWayDijkstra(start, end, graph)
+                visitedNodes = TwoWayDijkstra(start, end, graph)
                 if(visitedNodes.length > 0){
                     let start = visitedNodes[visitedNodes.length -2]
                     let end = visitedNodes[visitedNodes.length -1]
@@ -93,6 +93,21 @@ export default class Grid extends Component<Props, State> {
                 if(visitedNodes.length > 0){
                     let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
                     this.highLightGrid(path, visitedNodes)
+                }
+                break;
+            
+            case "BA*":
+                visitedNodes = TwoWayAStar(start, end, graph)
+                if(visitedNodes.length > 0){
+                    let start = visitedNodes[visitedNodes.length -2]
+                    let end = visitedNodes[visitedNodes.length -1]
+                    if(start.key === end.key || (start.previous && start.previous.key === end.key)){
+                        let endpath = getPathInOrder(visitedNodes.pop())
+                        let startpath = getPathInOrder(visitedNodes.pop())
+                        this.highLightGrid([...startpath, ...endpath], visitedNodes)
+                    }else {
+                        this.highLightGrid([], visitedNodes)
+                    }
                 }
                 break;
 

@@ -20,6 +20,7 @@ export default function AlgorithmPicker(props: props){
                 <Picker.Item label="Dijkstra" value="Dijkstra"/>
                 <Picker.Item label="Bidirectional Dijkstra" value="BiD" />
                 <Picker.Item label="A Star (A*)" value="A*" />
+                <Picker.Item label="Bidirectional A Star (A*)" value="BA*" />
                 <Picker.Item label="Breadth-First Search" value="BFS"/>
                 <Picker.Item label="Depth-First Search" value="DFS" />
         </Picker>
