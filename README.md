@@ -7,7 +7,9 @@ An iOS and Android application that allows various pathfinding algorithms to be 
 
 **Bidirectional Dijkstra's** - Dijkstra's algorithm from both sides.  
 
-**A\*** - Like Dijkstra's in that it favors nodes close to the starting point, but also favors nodes close to the ending point (hueristic). Does not guarentee the shortest path.  
+**A\*** - Like Dijkstra's in that it favors nodes close to the starting point, but also favors nodes close to the ending point (hueristic). Does not guarentee the shortest path. A [tie-breaker](http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#breaking-ties) that prefers straight lines was included in order to prevent multiple nodes from having the same F values.  
+
+**Bidirectional Dijkstra's** - The A* algorithm from both sides.
 
 **Breadth First Search** - Traverses through a graph one level at a time until it finds the target node. Since there are no weights, this algorithm does guarentee the shortest path.  
 
