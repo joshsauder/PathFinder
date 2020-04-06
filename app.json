@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Path Finding Visualization",
-    "description": "A tool that allows various path finding algorithms to be visualized in action. Current algorithms include Dijkstra's (unidirectional and bidirectional), A*, and Breadth-First Search.",
+    "description": "A tool that allows various path finding algorithms to be visualized in action. Current algorithms include Dijkstra's (unidirectional and bidirectional), A* (unidirectional and bidirectional), Breadth-First Search and Depth-First Search.",
     "slug": "PathFindingVisualization",
     "privacy": "public",
     "sdkVersion": "36.0.0",
