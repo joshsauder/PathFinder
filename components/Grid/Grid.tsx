@@ -111,6 +111,7 @@ export default class Grid extends Component<Props, State> {
     }
 
     setupGrid = () => {
+        //500 nodes in total
         this.setState(state => {
             for(let r = 0; r < 25; r++){
                 let row: node[] = []
@@ -138,10 +139,10 @@ export default class Grid extends Component<Props, State> {
         let coordinates = id.split(',')
         let selectedNode = createNode(id, parseInt(coordinates[0]), parseInt(coordinates[1]))
 
-        if(start && end){
+        //need to check if start or end is added and if node clicked is the current start and ending node.
+        if(start && end && start.key !== id && end.key !== id){
             this.itemRefs[id](2)
             selectedNode.wall = true
-
             graph[selectedNode.y][selectedNode.x] = selectedNode
         }else {
             if(start === undefined){
@@ -150,9 +151,13 @@ export default class Grid extends Component<Props, State> {
             }else if(start.key === id){
                 this.setState({start: undefined})
                 this.props.setStep(1)
-            }else {
+            }else if(end === undefined){
                 this.setState({end: {...selectedNode}})
                 this.props.setStep(3)
+            }else {
+                //case where selected node is the end node
+                this.setState({end: undefined})
+                this.props.setStep(2)
             }
         }
     }

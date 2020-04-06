@@ -12,6 +12,13 @@ export type node = {
     open: boolean
 }
 
+/**
+ * Creates a node given the key, x, and y values.
+ * 
+ * @param key - the Nodes key
+ * @param x - x value
+ * @param y y value
+ */
 export function createNode(key: string, x: number, y :number): node{
     return {
         key: key, 
@@ -28,6 +35,7 @@ export function createNode(key: string, x: number, y :number): node{
     }
 }
 
+//Calculation F value for A*
 function getF(): number {
     return this.heuristic + this.g
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {TouchableOpacity, Dimensions, View, Animated} from 'react-native'
 import Style from '../../styles/Grid'
 
@@ -14,13 +14,31 @@ export default function Item(props: props){
     const [color] = useState(new Animated.Value(0))
     const [rotate] = useState(new Animated.Value(0))
 
+    useEffect(() => {
+        //if selected switch, else if unselected need to switch back
+        if(props.selected){
+            Animated.timing(
+                color,
+                { toValue: -2, duration: 500 }
+            ).start()
+        }else if(!props.selected && color._value === -2){
+            Animated.timing(
+                color,
+                { toValue: 0, duration: 500 }
+            ).start()
+        }
+    }, [props.selected])
+
+    //add reference to each node in graph
     props.forwardRef((value: number) => animateColor(value))
     
+    //color changing animations
     var bgColor = color.interpolate({
         inputRange: [ -2,-1,0, 1, 2],
         outputRange: ['#FFCA28','#F06292' ,'#9575CD', 'white', '#210B2C']
     })
 
+    //rotation animation
     var bgRotate = rotate.interpolate({
         inputRange: [0, 100],
         outputRange: ['0deg', '360deg']
@@ -37,16 +55,8 @@ export default function Item(props: props){
                     rotate,
                     {toValue: 100, duration: 500} 
                 )
-
             ]).start()
         }
-    }
-
-    if(props.selected){
-        Animated.timing(
-            color,
-            { toValue: -2, duration: 500 }
-        ).start()
     }
 
     return (

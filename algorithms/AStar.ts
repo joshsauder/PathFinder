@@ -22,7 +22,6 @@ export function AStar(start: node, end: node, grid: node[][]): node[]{
     //set start node f to 0
     sNode.g = 0
     sNode.heuristic = 0
-    sNode.closed = true
     
     queuedNodes.push(sNode)
 
