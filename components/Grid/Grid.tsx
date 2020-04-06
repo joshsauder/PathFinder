@@ -101,12 +101,12 @@ export default class Grid extends Component<Props, State> {
         visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](-1)
-            }, 80*index)
+            }, 70*index)
         })
         path.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](1)
-            }, 80*(index + visitiedNodes.length))
+            }, 70*(index + visitiedNodes.length))
         })
     }
 

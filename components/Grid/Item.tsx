@@ -19,12 +19,12 @@ export default function Item(props: props){
         if(props.selected){
             Animated.timing(
                 color,
-                { toValue: -2, duration: 500 }
+                { toValue: -2, duration: 410 }
             ).start()
         }else if(!props.selected && color._value === -2){
             Animated.timing(
                 color,
-                { toValue: 0, duration: 500 }
+                { toValue: 0, duration: 410 }
             ).start()
         }
     }, [props.selected])
