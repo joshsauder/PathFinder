@@ -1,4 +1,5 @@
 import React from 'react'
+import {Animated} from 'react-native'
 import {shallow} from 'enzyme'
 import Item from '../components/Grid/Item'
 

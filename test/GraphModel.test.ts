@@ -11,7 +11,6 @@ describe('Test Node Modal', () => {
             x: 1,
             y: 2,
             previous:null, 
-            weight: Infinity, 
             closed: false, 
             open: false,
             wall: false, 

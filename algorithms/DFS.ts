@@ -1,5 +1,6 @@
 import { node } from '../models/Graph'
 import {findNeighborNodes} from './Utils'
+import {processNeighborNodes} from './BFS'
 
 /**
  * Depth-First Search Finder
@@ -28,6 +29,7 @@ export function DepthFirstSearch(start: node, end: node, grid: node[][]): node[]
             }
 
             let neighborNodes = findNeighborNodes(currentNode, grid[0].length, grid.length, grid)
+            //process same way as BFS
             processNeighborNodes(neighborNodes, currentNode)
 
             queuedNodes.push(...neighborNodes)
@@ -35,18 +37,4 @@ export function DepthFirstSearch(start: node, end: node, grid: node[][]): node[]
     }
 
     return visitedNodes
-}
-
-/**
- * Prevents each neighbor node from being processed again 
- * Sets the previous node to the current node
- * 
- * @param neighborNodes - Array of neighbor nodes to the current node
- * @param currentNode - the current node that is opened
- */
-function processNeighborNodes(neighborNodes: node[], currentNode: node){
-    neighborNodes.forEach(node => {
-        node.closed = true
-        node.previous = currentNode
-    })
 }

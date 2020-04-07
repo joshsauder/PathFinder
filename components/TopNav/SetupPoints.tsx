@@ -18,7 +18,7 @@ export default function SetupPoints({step}: props){
             text = "Select a Ending Point"
             break;
         case 3:
-            text = "Select any walls and click \"Find Wall\" "
+            text = "Select any walls and click \"Find Path\" "
             break;
         case 4:
             text = "Let us generate a path from start to finish"

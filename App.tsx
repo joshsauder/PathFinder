@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, SafeAreaView } from 'react-native';
 import {AppLoading} from 'expo'
 import Grid from './components/Grid/Grid'
 import Nav from './components/TopNav/Nav';
@@ -34,12 +34,12 @@ export default function App() {
   }
 
   return (
-    <View style={Style.background}>
+    <SafeAreaView style={Style.background}>
       <View style={[Style.header, {width: Dimensions.get('window').width - 10 }]}>
         <Nav algorithm={algorithm} setAlgorithm={(value: string) => setAlgorithm(value)} step={step} />
         <Grid algorithm={algorithm} setStep={(step: number) => setStep(step)} step={step} />
         <ButtonView onSubmit={() => setStep(4)} onReset={() => setStep(1)} step={step}/>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

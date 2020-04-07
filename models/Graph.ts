@@ -7,8 +7,8 @@ export type node = {
     g: number
     f: () => number
     wall: boolean
-    closed: boolean
     open: boolean
+    closed: boolean
 }
 
 /**

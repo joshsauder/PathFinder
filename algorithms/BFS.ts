@@ -18,7 +18,6 @@ export function BreadthFirstSearch(start: node, end: node, grid: node[][]): node
 
     //set start and end weights to 0
     let sNode = grid[start.y][start.x]
-    sNode.weight = 0
     sNode.closed = true
     
     queuedNodes.push(sNode)
@@ -41,13 +40,15 @@ export function BreadthFirstSearch(start: node, end: node, grid: node[][]): node
 }
 
 /**
+ * >>> Used for BFS and DFS ONLY <<<
+ * >>> A* and Dijkstra's processNeighborNode function can be found in the AStar.ts file <<<
  * Prevents each neighbor node from being processed again 
  * Sets the previous node to the current node
  * 
  * @param neighborNodes - Array of neighbor nodes to the current node
  * @param currentNode - the current node that is opened
  */
-function processNeighborNodes(neighborNodes: node[], currentNode: node){
+export function processNeighborNodes(neighborNodes: node[], currentNode: node){
     neighborNodes.forEach(node => {
         node.closed = true
         node.previous = currentNode
