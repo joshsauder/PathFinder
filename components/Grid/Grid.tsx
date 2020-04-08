@@ -79,6 +79,9 @@ export default class Grid extends Component<Props, State> {
         let {start, end, graph} = this.state
         let visitedNodes: node[]
 
+        //prevent reset of submission
+        this.props.setStep(5)
+
         switch(this.props.algorithm){
             case "Dijkstra":
                 visitedNodes = Dijkstras(start, end, graph)
@@ -117,7 +120,7 @@ export default class Grid extends Component<Props, State> {
             //check if path was found
             let path = visitedNodes[visitedNodes.length-1].key === end.key ? getPathInOrder(visitedNodes.pop()) : []
             this.highLightGrid(path, visitedNodes)
-        }
+        }else {this.props.setStep(6)}
     }
 
     processBidirectional = (visitedNodes: node[]) => {
@@ -132,19 +135,23 @@ export default class Grid extends Component<Props, State> {
             }else {
                 this.highLightGrid([], visitedNodes)
             }
-        }
+        }else {this.props.setStep(6)}
     }
 
     highLightGrid = (path: node[], visitiedNodes: node[]) => {
         //change background color by reference. See setReference() for reason why this is done.
+        //after completion setStep to 4 and allow reset and submission
         visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](-1)
             }, 70*index)
         })
+
         path.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](1)
+                //reenable submit and reset buttons
+                if(index === path.length-1) {this.props.setStep(6)}
             }, 70*(index + visitiedNodes.length))
         })
     }
