@@ -144,6 +144,7 @@ export default class Grid extends Component<Props, State> {
         visitiedNodes.forEach((node, index) => {
             setTimeout(() => {
                 this.itemRefs[node.key](-1)
+                if(path.length === 0) {this.props.setStep(6)}
             }, 70*index)
         })
 
