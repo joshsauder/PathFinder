@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 
-An iOS and Android application that allows various pathfinding algorithms to be visualized in action. You can download the app by downloading the Expo app ([iOS](https://itunes.apple.com/app/apple-store/id982107779) or [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www)), and then scanning the QR code found at the following [link](https://exp.host/@joshsauder/PathFindingVisualization). I do plan on publishing this on the Apple App Store in the near future.
+An iOS and Android application that allows various pathfinding algorithms to be visualized in action. You can download the app by downloading the Expo app ([iOS](https://itunes.apple.com/app/apple-store/id982107779) or [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www)), and then scanning the QR code found at the following [link](https://exp.host/@joshsauder/PathFindingVisualization). You can also download this app on the Apple App Store by visiting the following [link](https://apps.apple.com/us/app/path-finding-visualization/id1506957834?ls=1).
 
 ## Current Algorithms
 **Dijkstra's** - Works by expanding outwards until it reaches the target node. Guarenteed to find the shortest path as long as there are not any negative weights.  
