@@ -21,6 +21,6 @@ An iOS and Android application that allows various pathfinding algorithms to be 
 
 ## Tech Stack
 - [React Native](https://reactnative.dev) - Mobile application framework
-- [TypeScript](https://www.typescriptlang.org) - Strict syntactical superset of Javascript, and allows for static typing.
+- [TypeScript](https://www.typescriptlang.org) - Strict syntactical superset of Javascript; allows for static typing.
 - [Expo](https://expo.io) - React Native toolchain that allows for simplified development
 - [Native Base](https://nativebase.io) - React Native styling framework
