@@ -1,6 +1,7 @@
 # Path Finding Visualization
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
+[![CodeFactor](https://www.codefactor.io/repository/github/joshsauder/pathfindingvisualization/badge)](https://www.codefactor.io/repository/github/joshsauder/pathfindingvisualization)
 
 An iOS and Android application that allows various pathfinding algorithms to be visualized in action. You can download the app by downloading the Expo app ([iOS](https://itunes.apple.com/app/apple-store/id982107779) or [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www)), and then scanning the QR code found at the following [link](https://exp.host/@joshsauder/PathFindingVisualization). You can also download this app on the Apple App Store by visiting the following [link](https://apps.apple.com/us/app/path-finding-visualization/id1506957834?ls=1).
 

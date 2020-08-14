@@ -28,8 +28,8 @@ export default class Grid extends Component<Props, State> {
 
     constructor(props){
         super(props)
-        this.state = { 
-            numCols: 20, 
+        this.state = {
+            numCols: 20,
             start: undefined,
             end: undefined,
             graph: []
@@ -206,13 +206,13 @@ export default class Grid extends Component<Props, State> {
         let {start, end} = this.state
         return (
                 <FlatList
-                style={Style.MainContainer} 
+                style={Style.MainContainer}
                 data= {this.renderData()}
                 scrollEnabled = {false}
-                renderItem={({item}) => 
-                    <Item id={item.key} 
-                        onSelect={this.itemSelected} 
-                        selected={(start && start.key === item.key) || (end && end.key === item.key)} 
+                renderItem={({item}) =>
+                    <Item id={item.key}
+                        onSelect={this.itemSelected}
+                        selected={(start && start.key === item.key) || (end && end.key === item.key)}
                         forwardRef={(c: (value: number) => void) => {this.setReference(c, item.key)}}
                         />}
                 numColumns={this.state.numCols}
